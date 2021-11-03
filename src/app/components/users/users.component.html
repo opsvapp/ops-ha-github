@@ -1,0 +1,100 @@
+<!-- Titulo -->
+<div *ngIf="canCreate" class="row titulo">
+  <h4>{{ "USERS.NEWUSER" | translate }}</h4>
+</div>
+
+<!-- Forma para entrada de datos -->
+<form *ngIf="canCreate">
+  <div class="form-group">
+    <label>{{ "USERS.NAMES" | translate }}</label>
+    <input
+      [(ngModel)]="name"
+      name="name"
+      class="form-control"
+      type="text"
+      pattern="[a-zA-Z]*"
+    />
+  </div>
+  <div class="form-group">
+    <label>{{ "USERS.LASTNAMES" | translate }}</label>
+    <input
+      [(ngModel)]="surname"
+      name="apellido"
+      class="form-control"
+      type="text"
+    />
+  </div>
+  <div class="form-group">
+    <label>{{ "USERS.EMAIL" | translate }}</label>
+    <input [(ngModel)]="mail" name="mail" class="form-control" type="text" />
+  </div>
+  <div class="form-group">
+    <label>{{ "USERS.PASSWORD" | translate }}</label>
+    <input
+      [(ngModel)]="password"
+      name="password"
+      class="form-control"
+      type="password"
+    />
+    <small style="color: gray">{{ "USERS.INFOMSG" | translate }}</small>
+  </div>
+  <!-- Tipo de Usuario -->
+  <div class="form-check" style="margin-bottom: 15px">
+    <input
+      (click)="setRegional()"
+      [checked]="regional"
+      class="form-check-input"
+      type="checkbox"
+    />
+    <label class="form-check-label" style="color: dodgerblue">
+      {{ "USERS.REGIONALUSER" | translate }}
+    </label>
+  </div>
+  <!-- Paises -->
+  <div *ngIf="!regional" class="form-group">
+    <label>
+      {{ "USERS.ASSIGNEDCOUNTRY" | translate }}
+    </label>
+    <select
+      [(ngModel)]="countryId"
+      name="country"
+      class="custom-select my-1 mr-sm-2"
+    >
+      <option *ngFor="let i of countryList" [value]="i.idCountry">
+
+        <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+        <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+        <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+        <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+
+      </option>
+    </select>
+  </div>
+  <!-- Profile List -->
+  <div class="form-group">
+    <label>{{ "USERS.PROFILE" | translate }}</label>
+    <select
+      [(ngModel)]="profile"
+      name="profile"
+      class="custom-select my-1 mr-sm-2"
+    >
+      <option *ngFor="let item of profileList" value="{{ item.id }}">
+        {{ item.name }}
+      </option>
+    </select>
+  </div>
+  <!-- Bloqueo de usuario -->
+  <div class="form-group">
+    <label>{{ "USERS.ISBLOCKED" | translate }}</label>
+    <select [(ngModel)]="state" name="state" class="custom-select my-1 mr-sm-2">
+      <option value="true">{{ "USERS.BLOCKED" | translate }}</option>
+      <option value="false">{{ "USERS.UNBLOCKED" | translate }}</option>
+    </select>
+  </div>
+  <div class="row justify-content-center">
+    <button (click)="createUser()" type="button" class="btn btn-success">
+      {{ "USERS.SAVE" | translate }}
+      <i-bs name="person-plus"></i-bs>
+    </button>
+  </div>
+</form>

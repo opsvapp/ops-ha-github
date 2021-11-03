@@ -1,0 +1,73 @@
+<!-- Para la pantalla de Login de Usuarios-->
+<div class="container" style="width: 33%; margin-top: 15px">
+  <div style="height: 2cm"></div>
+  <div class="row justify-content-center">
+    <img
+      *ngIf="lang == 'en'"
+      src="../../../assets/logo/logo_EN.svg"
+      style="height: 120px"
+    />
+    <img
+      *ngIf="lang == 'es'"
+      src="../../../assets/logo/logo_ES.svg"
+      style="height: 120px"
+    />
+    <img
+      *ngIf="lang == 'pt'"
+      src="../../../assets/logo/logo_PT.svg"
+      style="height: 120px"
+    />
+    <img
+      *ngIf="lang == 'fr'"
+      src="../../../assets/logo/logo_FR.svg"
+      style="height: 120px"
+    />
+  </div>
+  <div style="height: 1cm"></div>
+  <div
+    class="row"
+    style="border-bottom: 1px solid rgb(255, 103, 31); margin-bottom: 15px"
+  >
+    <h4>{{ "LOGIN.TITLE" | translate }}</h4>
+  </div>
+  <form>
+    <div class="form-group">
+      <label>{{ "LOGIN.USER" | translate }}</label>
+      <input
+        [(ngModel)]="username"
+        name="password"
+        class="form-control"
+        type="text"
+      />
+    </div>
+    <div class="form-group">
+      <label>{{ "LOGIN.PASSWORD" | translate }}</label>
+      <input
+        [(ngModel)]="password"
+        name="password"
+        class="form-control"
+        type="password"
+      />
+    </div>
+    <!-- Seleccion de idioma -->
+    <div class="form-group">
+      <label>{{ "LOGIN.LANGUAGE" | translate }}</label>
+      <select
+        [(ngModel)]="lang"
+        name="languageselect"
+        class="custom-select my-1 mr-sm-2"
+        (change)="updateLanguage($event)"
+      >
+        <option *ngFor="let lang of languages" [value]="lang.val">
+          {{ lang.title }}
+        </option>
+      </select>
+    </div>
+    <div class="row justify-content-center">
+      <button class="btn btn-primary" (click)="logIn()">
+        {{ "LOGIN.LOGIN" | translate }}
+      </button>
+    </div>
+  </form>
+  <app-footer></app-footer>
+</div>

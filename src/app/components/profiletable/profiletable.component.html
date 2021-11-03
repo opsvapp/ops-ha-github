@@ -1,0 +1,1033 @@
+<div *ngIf="canReview" class="row titulo">
+  <h4>{{ "PROFILETABLE.CURRENTPROFILES" | translate}}</h4>
+</div>
+<div *ngIf="canReview" class="row">
+  <table class="table table-striped table-hover table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th>{{ "PROFILETABLE.NAME" | translate}}</th>
+        <th>{{ "PROFILETABLE.DESC" | translate}}</th>
+        <th>{{ "PROFILETABLE.STATE" | translate}}</th>
+        <th>{{ "PROFILETABLE.ACTIONS" | translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listaResultados">
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        <td>
+          <div *ngIf="item.active == true; else elseBlock">{{ "PROFILETABLE.ACTIVE" | translate}}</div>
+          <ng-template #elseBlock>{{ "PROFILETABLE.INACTIVE" | translate}}</ng-template>
+        </td>
+        <td>
+          <div
+            *ngIf="item.id != 1; else elseBlock2"
+            class="btn-group"
+            role="group"
+          >
+            <button
+              *ngIf="canUpdate"
+              (click)="setProfileFunctionsId(item.id)"
+              type="button"
+              class="btn btn-info btn-sm"
+              data-toggle="modal"
+              data-target="#funcionesNuevas"
+            >
+              <i-bs name="gear"></i-bs>
+            </button>
+            <button
+              *ngIf="canUpdate"
+              (click)="setProfileId(item.id)"
+              type="button"
+              class="btn btn-warning btn-sm"
+              data-toggle="modal"
+              data-target="#datosNuevos"
+            >
+              <i-bs name="pencil"></i-bs>
+            </button>
+            <button
+              *ngIf="canDelete"
+              (click)="deleteProfile(item.id)"
+              type="button"
+              class="btn btn-danger btn-sm"
+            >
+              <i-bs name="trash"></i-bs>
+            </button>
+          </div>
+          <ng-template #elseBlock2>{{ "PROFILETABLE.NOACTIONS" | translate}}</ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal para update -->
+<div
+  class="modal fade"
+  id="datosNuevos"
+  tabindex="-1"
+  aria-labelledby="datosNuevos"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "PROFILETABLE.UPDATEACTIONS" | translate}}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><em>{{ "PROFILETABLE.INFOMSG" | translate}}</em></p>
+        <form>
+          <div class="form-group">
+            <label>{{ "PROFILETABLE.NAME" | translate}}</label>
+            <input
+              [(ngModel)]="name"
+              name="name"
+              class="form-control"
+              type="text"
+            />
+          </div>
+          <div class="form-group">
+            <label>{{ "PROFILETABLE.DESC" | translate}}</label>
+            <input
+              [(ngModel)]="description"
+              name="description"
+              class="form-control"
+              type="text"
+            />
+          </div>
+          <div class="form-group">
+            <label>{{ "PROFILETABLE.STATE" | translate}}</label>
+            <select
+              [(ngModel)]="state"
+              name="state"
+              class="custom-select my-1 mr-sm-2"
+            >
+              <option value="true">{{ "PROFILETABLE.ACTIVE" | translate}}</option>
+              <option value="false">{{ "PROFILETABLE.INACTIVE" | translate}}</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "PROFILETABLE.CLOSE" | translate}}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateProfile()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{ "PROFILETABLE.SAVE" | translate}}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para funciones -->
+<div
+  class="modal fade"
+  id="funcionesNuevas"
+  tabindex="-1"
+  aria-labelledby="funcionesNuevas"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "PROFILETABLE.ADDFUNCTIONS" | translate}}</h5>
+        <br />
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Form para Funciones -->
+        <form>
+          <div class="form-row">
+            <div class="col">
+              <!-- Funciones de Usuario-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.USER_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="userView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="userView"
+                    />
+                    <label class="form-check-label" for="userView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="userCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="userCreate"
+                    />
+                    <label class="form-check-label" for="userCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="userUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="userUpdate"
+                    />
+                    <label class="form-check-label" for="userUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="userDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="userDelete"
+                    />
+                    <label class="form-check-label" for="userDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Funciones de Perfiles-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.PROFILES_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="profileView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="profileView"
+                    />
+                    <label class="form-check-label" for="profileView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="profileCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="profileCreate"
+                    />
+                    <label class="form-check-label" for="profileCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="profileUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="profileUpdate"
+                    />
+                    <label class="form-check-label" for="profileUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="profileDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="profileDelete"
+                    />
+                    <label class="form-check-label" for="profileDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Funciones de Noticias-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.NEWS_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="newsView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="newsView"
+                    />
+                    <label class="form-check-label" for="newsView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="newsCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="newsCreate"
+                    />
+                    <label class="form-check-label" for="newsCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="newsUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="newsUpdate"
+                    />
+                    <label class="form-check-label" for="newsUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="newsDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="newsDelete"
+                    />
+                    <label class="form-check-label" for="newsDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Funciones de Admin1 -->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.ADMIN1_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="adminOneView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="adminOneView"
+                    />
+                    <label class="form-check-label" for="adminOneView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="adminOneCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="adminOneCreate"
+                    />
+                    <label class="form-check-label" for="adminOneCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="adminOneUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="adminOneUpdate"
+                    />
+                    <label class="form-check-label" for="adminOneUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="adminOneDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="adminOneDelete"
+                    />
+                    <label class="form-check-label" for="adminOneDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Funciones de Health Center -->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.HCENTER" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="healthCenterView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="healthCenterView"
+                    />
+                    <label class="form-check-label" for="healthCenterView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="healthCenterCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="healthCenterCreate"
+                    />
+                    <label class="form-check-label" for="healthCenterCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="healthCenterUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="healthCenterUpdate"
+                    />
+                    <label class="form-check-label" for="healthCenterUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="healthCenterDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="healthCenterDelete"
+                    />
+                    <label class="form-check-label" for="healthCenterDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Funciones de Bitacora-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.LOGS_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="logView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="logView"
+                    />
+                    <label class="form-check-label" for="logView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Segunda Columna-->
+            <div class="col">
+              <!-- Funciones de Vacunas-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.VACCINES_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineView"
+                    />
+                    <label class="form-check-label" for="vaccineView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCreate"
+                    />
+                    <label class="form-check-label" for="vaccineCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineUpdate"
+                    />
+                    <label class="form-check-label" for="vaccineUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineDelete"
+                    />
+                    <label class="form-check-label" for="vaccineDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Funciones de Enfermedades-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.DISEASES_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="diseaseView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="diseaseView"
+                    />
+                    <label class="form-check-label" for="diseaseView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="diseaseCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="diseaseCreate"
+                    />
+                    <label class="form-check-label" for="diseaseCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="diseaseUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="diseaseUpdate"
+                    />
+                    <label class="form-check-label" for="diseaseUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="diseaseDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="diseaseDelete"
+                    />
+                    <label class="form-check-label" for="diseaseDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Funciones de Efectos Secundarios-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.EFFECTS_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="effectsView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="effectsView"
+                    />
+                    <label class="form-check-label" for="effectsView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="effectsCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="effectsCreate"
+                    />
+                    <label class="form-check-label" for="effectsCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="effectsUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="effectsUpdate"
+                    />
+                    <label class="form-check-label" for="effectsUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="effectsDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="effectsDelete"
+                    />
+                    <label class="form-check-label" for="effectsDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Funciones de Admin2 -->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.ADMIN2_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="adminTwoView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="adminTwoView"
+                    />
+                    <label class="form-check-label" for="adminTwoView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="adminTwoCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="adminTwoCreate"
+                    />
+                    <label class="form-check-label" for="adminTwoCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="adminTwoUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="adminTwoUpdate"
+                    />
+                    <label class="form-check-label" for="adminTwoUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="adminTwoDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="adminTwoDelete"
+                    />
+                    <label class="form-check-label" for="adminTwoDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Vaccine Center -->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.VCENTER" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCenterView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCenterView"
+                    />
+                    <label class="form-check-label" for="vaccineCenterView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCenterCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCenterCreate"
+                    />
+                    <label class="form-check-label" for="vaccineCenterCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCenterUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCenterUpdate"
+                    />
+                    <label class="form-check-label" for="vaccineCenterUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCenterDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCenterDelete"
+                    />
+                    <label class="form-check-label" for="vaccineCenterDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Funciones de App-->
+              <div class="form-row separador2">
+                <h6 style="color: white">{{ "PROFILETABLE.APP_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="appView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="appView"
+                    />
+                    <label class="form-check-label" for="appView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Tercera Columna -->
+            <div class="col">
+              <!-- Funciones de Paises-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.COUNTRY_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="countryView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="countryView"
+                    />
+                    <label class="form-check-label" for="countryView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="countryCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="countryCreate"
+                    />
+                    <label class="form-check-label" for="countryCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="countryUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="countryUpdate"
+                    />
+                    <label class="form-check-label" for="countryUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="countryDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="countryDelete"
+                    />
+                    <label class="form-check-label" for="countryDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Funciones de Esquemas-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.SCHEMES_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="schemeView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="schemeView"
+                    />
+                    <label class="form-check-label" for="schemeView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="schemeCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="schemeCreate"
+                    />
+                    <label class="form-check-label" for="schemeCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="schemeUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="schemeUpdate"
+                    />
+                    <label class="form-check-label" for="schemeUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="schemeDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="schemeDelete"
+                    />
+                    <label class="form-check-label" for="schemeDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Funciones de Travel Vaccine -->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.TRAVEL_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="travelView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="travelView"
+                    />
+                    <label class="form-check-label" for="travelView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="travelCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="travelCreate"
+                    />
+                    <label class="form-check-label" for="travelCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="travelUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="travelUpdate"
+                    />
+                    <label class="form-check-label" for="travelUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="travelDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="travelDelete"
+                    />
+                    <label class="form-check-label" for="travelDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Vaccine Country -->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.VACCOUNTRY_FUNC" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCountryView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCountryView"
+                    />
+                    <label class="form-check-label" for="vaccineCountryView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCountryCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCountryCreate"
+                    />
+                    <label class="form-check-label" for="vaccineCountryCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCountryUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCountryUpdate"
+                    />
+                    <label class="form-check-label" for="vaccineCountryUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vaccineCountryDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vaccineCountryDelete"
+                    />
+                    <label class="form-check-label" for="vaccineCountryDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Vaccination Point -->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.VPOINT" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vpointCenterView"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vpointCenterView"
+                    />
+                    <label class="form-check-label" for="vpointCenterView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vpointCenterCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vpointCenterCreate"
+                    />
+                    <label class="form-check-label" for="vpointCenterCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vpointCenterUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vpointCenterUpdate"
+                    />
+                    <label class="form-check-label" for="vpointCenterUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="vpointCenterDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="vpointCenterDelete"
+                    />
+                    <label class="form-check-label" for="vpointCenterDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Upload -->
+              <div class="form-row separador3" >
+                <h6 style="color: white">Upload</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="uploadFiles"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="uploadFiles"
+                    />
+                    <label class="form-check-label" for="uploadFiles"
+                      >Subir Archivos</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!--Limite de la columna-->
+            </div>
+            <!--Limite del Modal-->
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "PROFILETABLE.CLOSE" | translate}}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="setProfileFunctions()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{ "PROFILETABLE.ASSIGN" | translate}}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

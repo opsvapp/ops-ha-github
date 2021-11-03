@@ -1,0 +1,22 @@
+version: "3.5"
+services:
+  ngix-admin-img:
+    container_name: ops-ha-frontend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #    volumes:
+    #      - '.:/usr/src/app'
+    #      - '/usr/src/app/node_modules'
+    ports:
+      - "8081:80"
+    environment:
+      - HOST=0.0.0.0
+    networks:
+      - default
+    #----------------------------------------------
+networks:
+  default:
+    external:
+      name: docker-k8s-net

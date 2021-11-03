@@ -1,0 +1,91 @@
+/* 
+Colores Pantone
+Principal Pantone 2925 - Azul Claro rgb(30, 127, 184)
+          Pantone 165 - Naranja rgb(255, 103, 31)
+          Pantone 647 - Azul Oscuro rgb(35, 97, 146)
+*/
+
+.titulo {
+  border-right: solid 5px rgb(255, 103, 31);
+  border-bottom: 1px solid rgb(255, 103, 31);
+  margin-bottom: 15px;
+  transition: border-right 500ms;
+}
+
+.titulo:hover {
+  border-right: solid 50px rgb(255, 103, 31);
+  border-bottom: 1px solid rgb(255, 103, 31);
+  margin-bottom: 15px;
+}
+
+.separador {
+  padding-left: 5px;
+  background-color: rgb(255, 103, 31);
+  margin-bottom: 0px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.separador2 {
+  padding-left: 5px;
+  background-color: rgb(35, 97, 146);
+  margin-bottom: 0px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.separador3 {
+  padding-left: 5px;
+  background-color: limegreen;
+  margin-bottom: 0px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.ficha {
+  padding-top: 10px;
+  padding-left: 15px;
+  background-color: whitesmoke;
+  margin-bottom: 10px;
+}
+
+table tr th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-top: 0;
+  background: #ededed;
+}
+
+.columnaFija {
+  position: sticky;
+  left: 0;
+  width: auto;
+  background-color: #536878;
+  color: white;
+}
+
+.tdCentro {
+  text-align: center;
+}
+
+.mirilla:hover {
+  border-bottom: solid 2px rgb(255, 103, 31);
+}
+
+.subtitulo {
+  margin-bottom: 10px;
+  border-right: solid 5px rgb(35, 97, 146);
+  border-bottom: solid 1px rgb(35, 97, 146);
+  width: 200px;
+}
+
+.lang a {
+  color: #536878 !important;
+}
+
+.navbar-toggler button {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}

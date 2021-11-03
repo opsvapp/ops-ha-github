@@ -1,0 +1,977 @@
+<div class="container">
+  <!--Titulo-->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 40%">
+    <h4>{{ "COUNTRY.MANAGEMENT" | translate }}</h4>
+  </div>
+  <!--Contenido-->
+  <div class="row">
+    <div class="col">
+      <!-- Menu de botones-->
+      <div
+        class="btn-group btn-group-toggle"
+        role="group"
+        style="margin-bottom: 15px"
+      >
+        <!-- Abrir listado de paises -->
+        <button
+          *ngIf="canReview"
+          class="btn btn-dark btn-sm"
+          type="button"
+          data-toggle="collapse"
+          data-target="#countryTable"
+        >
+        {{  "COUNTRY.COUNTRYLIST" | translate  }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <!-- Listado de Admin1 -->
+        <button
+          *ngIf="canReviewAdminOne"
+          class="btn btn-secondary btn-sm"
+          type="button"
+          data-toggle="collapse"
+          data-target="#adminOneTable"
+        >
+        {{  "COUNTRY.ADMIN_1" | translate  }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <!-- Abrir listado de Admin_2 -->
+        <button
+          *ngIf="canReviewAdminTwo"
+          class="btn btn-primary btn-sm"
+          type="button"
+          data-toggle="collapse"
+          data-target="#adminTwoTable"
+        >
+        {{  "COUNTRY.ADMIN_2" | translate  }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <!-- Abrir agregar pais -->
+        <button
+          *ngIf="canCreate"
+          class="btn btn-info btn-sm"
+          type="button"
+          data-toggle="collapse"
+          data-target="#countryForm"
+        >
+          {{  "COUNTRY.ADDCOUNTRY" | translate  }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <!-- Agregar Admin_1 -->
+        <button
+          *ngIf="canCreateAdminOne"
+          class="btn btn-success btn-sm"
+          type="button"
+          data-toggle="collapse"
+          data-target="#adminOneForm"
+        >
+          {{  "COUNTRY.ADDADMIN_1" | translate  }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <!-- Abrir crear Admin_2 -->
+        <button
+          *ngIf="canCreateAdminTwo"
+          class="btn btn-warning btn-sm"
+          type="button"
+          data-toggle="collapse"
+          data-target="#adminTwoForm"
+        >
+          {{  "COUNTRY.ADDADMIN_2" | translate  }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+      </div>
+      <!-- Area para crear paises -->
+      <div
+        class="collapse"
+        id="countryForm"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <!-- Fila-->
+        <div class="row">
+          <!--Primera Columna-->
+          <div
+            class="col-5"
+            style="border-right: dotted 2px silver; padding: 15px"
+          >
+            <h5 class="subtitulo">{{  "COUNTRY.ADDCOUNTRY" | translate  }}</h5>
+            <div class="form-group input-group-sm">
+              <label for="countryCode">{{  "COUNTRY.COUNTRYCODE" | translate  }}</label>
+              <input
+                [(ngModel)]="countryCode"
+                class="form-control"
+                type="text"
+                name="countryCode"
+                id="countryCode"
+              />
+            </div>
+            <hr />
+            <!--Ingles-->
+            <div class="form-group input-group-sm">
+              <label for="name_EN"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-primary">{{  "COUNTRY.ENGLISH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="nameEN"
+                class="form-control"
+                type="text"
+                name="name_EN"
+                id="name_EN"
+              />
+            </div>
+            <!--Español-->
+            <div class="form-group input-group-sm">
+              <label for="name_ES"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-danger">{{  "COUNTRY.SPANISH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="nameES"
+                class="form-control"
+                type="text"
+                name="name_ES"
+                id="name_ES"
+              />
+            </div>
+            <!--Portugues-->
+            <div class="form-group input-group-sm">
+              <label for="name_PT"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-warning">{{  "COUNTRY.PORTUGUESE" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="namePT"
+                class="form-control"
+                type="text"
+                name="name_PT"
+                id="name_PT"
+              />
+            </div>
+            <!--Frances-->
+            <div class="form-group input-group-sm">
+              <label for="name_FR"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-secondary">{{  "COUNTRY.FRENCH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="nameFR"
+                class="form-control"
+                type="text"
+                name="name_FR"
+                id="name_FR"
+              />
+            </div>
+            <!-- Habilitacion -->
+            <hr />
+            <div class="form-group input-group-sm">
+              <label for="activated">{{  "COUNTRY.STATE" | translate  }}</label>
+              <select
+                [(ngModel)]="activated"
+                class="form-control"
+                name="activated"
+                id="activated"
+              >
+                <option [value]="true">{{  "COUNTRY.ACTIVE" | translate  }}</option>
+                <option [value]="false">{{  "COUNTRY.INACTIVE" | translate  }}</option>
+              </select>
+            </div>
+          </div>
+          <!-- Row's End -->
+        </div>
+        <button (click)="saveCountry()" class="btn btn-success">
+          {{  "COUNTRY.SAVECOUNTRY" | translate  }}
+          <i-bs name="plus-circle"></i-bs>
+        </button>
+      </div>
+      <!-- Tabla de Paises -->
+      <div
+        class="collapse"
+        id="countryTable"
+        style="border-left: solid 2px coral; margin-top: 15px"
+      >
+        <div class="col">
+          <h5 class="subtitulo">{{  "COUNTRY.COUNTRYLIST" | translate  }}</h5>
+          <table class="table table-striped table-hover table-sm">
+            <thead class="thead-dark">
+              <tr>
+                <th>{{  "COUNTRY.COUNTRYCODE" | translate  }}</th>
+                <th>{{  "COUNTRY.NAME"        | translate  }}</th>
+                <th>{{  "COUNTRY.STATE"       | translate  }}</th>
+                <th>{{  "COUNTRY.ACTIONS"     | translate  }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of countryList">
+                <td>{{ item.countryCode }}</td>
+                <td>
+                  <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+                </td>
+                <td *ngIf="item.activated == 1; else elseBlock">{{  "COUNTRY.ACTIVE" | translate  }}</td>
+                <ng-template #elseBlock> <td>{{  "COUNTRY.INACTIVE" | translate  }}</td> </ng-template>
+                <td>
+                  <div class="btn-group" role="group">
+                    <!--Botones de Acción-->
+                    <button
+                      *ngIf="canUpdate"
+                      (click)="setCountryId(item.idCountry)"
+                      type="button"
+                      class="btn btn-warning btn-sm"
+                      data-toggle="modal"
+                      data-target="#datosNuevos"
+                    >
+                      <i-bs name="pencil"></i-bs>
+                    </button>
+                    <button
+                      *ngIf="canDelete"
+                      (click)="deleteCountry(item.idCountry)"
+                      type="button"
+                      class="btn btn-danger btn-sm"
+                    >
+                      <i-bs name="trash"></i-bs>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- admin 1 -->
+      <div
+        class="collapse"
+        id="adminOneForm"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <!-- Fila-->
+        <div class="row">
+          <!--Primera Columna-->
+          <div
+            class="col-5"
+            style="border-right: dotted 2px silver; padding: 15px"
+          >
+            <h5 class="subtitulo">{{  "COUNTRY.ADDADMIN1" | translate  }}</h5>
+            <div class="form-group input-group-sm">
+              <label for="originCountry">{{  "COUNTRY.ADDCOUNTRYORIGIN" | translate  }}</label>
+              <select
+                [(ngModel)]="originCountry"
+                (ngModelChange)="setAdminOneCountry($event)"
+                class="form-control"
+                name="originCountry"
+                id="originCountry"
+              >
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <hr />
+            <!--Ingles-->
+            <div class="form-group input-group-sm">
+              <label for="adminOneName_EN"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-primary">{{  "COUNTRY.ENGLISH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="adminOneNameEN"
+                class="form-control"
+                type="text"
+                name="adminOneName_EN"
+                id="adminOneName_EN"
+              />
+            </div>
+            <!--Español-->
+            <div class="form-group input-group-sm">
+              <label for="adminOneName_ES"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-danger">{{  "COUNTRY.SPANISH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="adminOneNameES"
+                class="form-control"
+                type="text"
+                name="adminOneName_ES"
+                id="adminOneName_ES"
+              />
+            </div>
+            <!--Portugues-->
+            <div class="form-group input-group-sm">
+              <label for="adminOneName_PT"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-warning">{{  "COUNTRY.PORTUGUESE" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="adminOneNamePT"
+                class="form-control"
+                type="text"
+                name="adminOneName_PT"
+                id="adminOneName_PT"
+              />
+            </div>
+            <!--Frances-->
+            <div class="form-group input-group-sm">
+              <label for="adminOneName_FR"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-secondary">{{  "COUNTRY.FRENCH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="adminOneNameFR"
+                class="form-control"
+                type="text"
+                name="adminOneName_FR"
+                id="adminOneName_FR"
+              />
+            </div>
+            <button (click)="saveAdminOne()" class="btn btn-success">
+              {{  "COUNTRY.SAVEADMIN1" | translate  }}
+              <i-bs name="plus-circle"></i-bs>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Tabla Admin1 -->
+      <div
+        class="collapse"
+        id="adminOneTable"
+        style="
+          border-left: solid 2px coral;
+          padding-left: 10px;
+          margin-top: 15px;
+        "
+      >
+        <!-- Seleccion de Pais -->
+        <div class="row" style="padding-left: 10px">
+          <div class="col-3">
+            <h5 class="subtitulo">{{  "COUNTRY.ADMIN1LIST" | translate  }}</h5>
+            <div class="form-group input-group-sm">
+              <label for="adminCountry">{{  "COUNTRY.ADDCOUNTRYORIGIN" | translate  }}</label>
+              <select
+                [(ngModel)]="originCountry"
+                (ngModelChange)="setAdminOneCountry($event)"
+                class="form-control"
+                name="adminCountry"
+                id="adminCountry"
+              >
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- Tabla de AdminOne -->
+        <div
+          class="row"
+          style="overflow-y: auto; max-height: 450px; padding-left: 10px"
+        >
+          <div class="col-7">
+            <table class="table table-striped table-hover table-sm">
+              <thead class="thead-dark">
+                <tr>
+                  <th>{{  "COUNTRY.NAME" | translate  }}</th>
+                  <th class="tdCentro">{{  "COUNTRY.ACTIONS" | translate  }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let i of adminOneList">
+                  <td>
+                    <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                    <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                    <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                    <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                  </td>
+                  <td class="tdCentro">
+                    <div class="btn-group" role="group">
+                      <!--Botones de Acción-->
+                      <button
+                        *ngIf="canUpdateAdminOne"
+                        (click)="setAdminOneId(i.idAdmin_1)"
+                        type="button"
+                        class="btn btn-warning btn-sm"
+                        data-toggle="modal"
+                        data-target="#datosNuevosAdminOne"
+                      >
+                        <i-bs name="pencil"></i-bs>
+                      </button>
+                      <button
+                        *ngIf="canDeleteAdminOne"
+                        (click)="deleteAdminOne(i.idAdmin_1)"
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                      >
+                        <i-bs name="trash"></i-bs>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Admin 2 -->
+      <div
+        class="collapse"
+        id="adminTwoForm"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <!-- Fila-->
+        <div class="row">
+          <!--Primera Columna-->
+          <div
+            class="col-5"
+            style="border-right: dotted 2px silver; padding: 15px"
+          >
+            <h5 class="subtitulo">{{  "COUNTRY.ADDADMIN2" | translate  }}</h5>
+            <!-- Pais Admin2 -->
+            <div class="form-group input-group-sm">
+              <label for="originCountry">{{  "COUNTRY.ADDCOUNTRYORIGIN" | translate  }}</label>
+              <select
+                [(ngModel)]="originCountry"
+                (ngModelChange)="setAdminTwoCountryId($event)"
+                class="form-control"
+                name="originCountry"
+                id="originCountry"
+              >
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <!-- Admin1 Admin2 -->
+            <div class="form-group input-group-sm">
+              <label for="adminTwoAdmin">{{  "COUNTRY.ADMIN1ORIGIN" | translate  }}</label>
+              <select
+                [(ngModel)]="adminTwoAdmin"
+                (ngModelChange)="setAdminTwoAdmin($event)"
+                class="form-control"
+                name="adminTwoAdmin"
+                id="adminTwoAdmin"
+              >
+                <option *ngFor="let i of adminOneList" [value]="i.idAdmin_1">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <hr />
+            <!--Ingles-->
+            <div class="form-group input-group-sm">
+              <label for="adminTwoName_EN"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-primary">{{  "COUNTRY.ENGLISH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="adminTwoNameEN"
+                class="form-control"
+                type="text"
+                name="adminTwoName_EN"
+                id="adminTwoName_EN"
+              />
+            </div>
+            <!--Español-->
+            <div class="form-group input-group-sm">
+              <label for="adminTwoName_ES"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-danger">{{  "COUNTRY.SPANISH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="adminTwoNameES"
+                class="form-control"
+                type="text"
+                name="adminTwoName_ES"
+                id="adminTwoName_ES"
+              />
+            </div>
+            <!--Portugues-->
+            <div class="form-group input-group-sm">
+              <label for="adminTwoName_PT"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-warning">{{  "COUNTRY.PORTUGUESE" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="adminTwoNamePT"
+                class="form-control"
+                type="text"
+                name="adminTwoName_PT"
+                id="adminTwoName_PT"
+              />
+            </div>
+            <!--Frances-->
+            <div class="form-group input-group-sm">
+              <label for="adminTwoName_FR"
+                >{{  "COUNTRY.NAME" | translate  }}
+                <span class="badge badge-secondary">{{  "COUNTRY.FRENCH" | translate  }}</span>
+              </label>
+              <input
+                [(ngModel)]="adminTwoNameFR"
+                class="form-control"
+                type="text"
+                name="adminTwoName_FR"
+                id="adminTwoName_FR"
+              />
+            </div>
+            <button (click)="saveAdminTwo()" class="btn btn-success">
+              {{  "COUNTRY.SAVEADMIN2" | translate  }}
+              <i-bs name="plus-circle"></i-bs>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Tabla Admin2 -->
+      <div
+        class="collapse"
+        id="adminTwoTable"
+        style="
+          border-left: solid 2px coral;
+          padding-left: 10px;
+          margin-top: 15px;
+        "
+      >
+        <!-- Titulo -->
+        <div class="row" style="padding-left: 10px">
+          <div class="col-md-6">
+            <h5 class="subtitulo">{{  "COUNTRY.ADMIN2LIST" | translate  }}</h5>
+          </div>
+        </div>
+        <!-- Seleccion de Pais y Admin1-->
+        <div class="row" style="padding-left: 10px">
+          <div class="col-3">
+            <div class="form-group input-group-sm">
+              <label for="originCountry">{{  "COUNTRY.ADDCOUNTRYORIGIN" | translate  }}</label>
+              <select
+                [(ngModel)]="originCountry"
+                (ngModelChange)="setAdminTwoCountryId($event)"
+                class="form-control"
+                name="originCountry"
+                id="originCountry"
+              >
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group input-group-sm">
+              <label for="adminTwoAdmin">{{  "COUNTRY.ADMIN1ORIGIN" | translate  }}</label>
+              <select
+                [(ngModel)]="adminTwoAdmin"
+                (ngModelChange)="setAdminTwoAdmin($event)"
+                class="form-control"
+                name="adminTwoAdmin"
+                id="adminTwoAdmin"
+              >
+                <option *ngFor="let i of adminOneList" [value]="i.idAdmin_1">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- Tabla de AdminTwo -->
+        <div
+          class="row"
+          style="overflow-y: auto; max-height: 450px; padding-left: 10px"
+        >
+          <div class="col-7">
+            <table class="table table-striped table-hover table-sm">
+              <thead class="thead-dark">
+                <tr>
+                  <th>{{  "COUNTRY.NAME" | translate  }}</th>
+                  <th class="tdCentro">{{  "COUNTRY.ACTIONS" | translate  }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let i of adminTwoList">
+                  <td>
+                    <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                    <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                    <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                    <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                  </td>
+                  <td class="tdCentro">
+                    <div class="btn-group" role="group">
+                      <!--Botones de Acción-->
+                      <button
+                        *ngIf="canUpdateAdminTwo"
+                        (click)="setAdminTwo(i.idAdmin_2)"
+                        type="button"
+                        class="btn btn-warning btn-sm"
+                        data-toggle="modal"
+                        data-target="#datosNuevosAdminTwo"
+                      >
+                        <i-bs name="pencil"></i-bs>
+                      </button>
+                      <button
+                        *ngIf="canUpdateAdminTwo"
+                        (click)="deleteAdminTwo(i.idAdmin_2)"
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                      >
+                        <i-bs name="trash"></i-bs>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Fin de contenido colapsable -->
+    </div>
+  </div>
+</div>
+
+<!-- Modal para actualizar Pais -->
+<div
+  class="modal fade"
+  id="datosNuevos"
+  tabindex="-1"
+  aria-labelledby="datosNuevos"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{  "COUNTRY.UPDATECOUNTRY" | translate  }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+              <!-- English -->
+              <div class="form-group input-group-sm">
+                <label for="modalCountryCode">{{  "COUNTRY.COUNTRYCODE" | translate  }}</label>
+                <input
+                  [(ngModel)]="modalCountryCode"
+                  class="form-control"
+                  type="text"
+                  id="modalCountryCode"
+                  name="modalCountryCode"
+                />
+              </div>
+              <hr />
+              <div class="form-group input-group-sm">
+                <label for="nameEN"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-primary">{{  "COUNTRY.ENGLISH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalNameEN"
+                  class="form-control"
+                  type="text"
+                  id="modalNameEN"
+                  name="modalNameEN"
+                />
+              </div>
+              <!-- Español -->
+              <div class="form-group input-group-sm">
+                <label for="nameES"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-danger">{{  "COUNTRY.SPANISH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalNameES"
+                  class="form-control"
+                  type="text"
+                  id="modalNameES"
+                  name="modalNameES"
+                />
+              </div>
+              <!-- Portugues -->
+              <div class="form-group input-group-sm">
+                <label for="namePT"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-warning">{{  "COUNTRY.PORTUGUESE" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalNamePT"
+                  class="form-control"
+                  type="text"
+                  id="modalNamePT"
+                  name="modalNamePT"
+                />
+              </div>
+              <!-- French -->
+              <div class="form-group input-group-sm">
+                <label for="nameEN"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-secondary">{{  "COUNTRY.FRENCH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalNameFR"
+                  class="form-control"
+                  type="text"
+                  id="modalNameFR"
+                  name="modalNameFR"
+                />
+              </div>
+              <!-- Activated -->
+              <hr />
+              <div class="form-group input-group-sm">
+                <label for="modalActivated">{{  "COUNTRY.STATE" | translate  }}</label>
+                <select
+                  [(ngModel)]="modalActivated"
+                  class="form-control"
+                  name="modalActivated"
+                  id="modalActivated"
+                >
+                  <option [value]="true">{{  "COUNTRY.ACTIVE" | translate  }}</option>
+                  <option [value]="false">{{  "COUNTRY.INACTIVE" | translate  }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{  "COUNTRY.CLOSE" | translate  }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateCountry()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{  "COUNTRY.SAVE" | translate  }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para actualizar Admin1 -->
+<div class="modal fade" id="datosNuevosAdminOne" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{  "COUNTRY.UPDATEADMIN1" | translate  }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+              <!-- English -->
+              <div class="form-group input-group-sm">
+                <label for="modalAdminOneNameEN"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-primary">{{  "COUNTRY.ENGLISH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalAdminOneNameEN"
+                  class="form-control"
+                  type="text"
+                  id="modalAdminOneNameEN"
+                  name="modalAdminOneNameEN"
+                />
+              </div>
+              <!-- Español -->
+              <div class="form-group input-group-sm">
+                <label for="modalAdminOneNameES"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-danger">{{  "COUNTRY.SPANISH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalAdminOneNameES"
+                  class="form-control"
+                  type="text"
+                  id="modalAdminOneNameES"
+                  name="modalAdminOneNameES"
+                />
+              </div>
+              <!-- Portugues -->
+              <div class="form-group input-group-sm">
+                <label for="modalAdminOneNamePT"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-warning">{{  "COUNTRY.PORTUGUESE" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalAdminOneNamePT"
+                  class="form-control"
+                  type="text"
+                  id="modalAdminOneNamePT"
+                  name="modalAdminOneNamePT"
+                />
+              </div>
+              <!-- French -->
+              <div class="form-group input-group-sm">
+                <label for="modalAdminOneNameFR"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-secondary">{{  "COUNTRY.FRENCH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalAdminOneNameFR"
+                  class="form-control"
+                  type="text"
+                  id="modalAdminOneNameFR"
+                  name="modalAdminOneNameFR"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{  "COUNTRY.CLOSE" | translate  }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateAdminOne()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{  "COUNTRY.SAVE" | translate  }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para actualizar Admin2 -->
+<div class="modal fade" id="datosNuevosAdminTwo" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{  "COUNTRY.UPDATEADMIN2" | translate  }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+              <!-- English -->
+              <div class="form-group input-group-sm">
+                <label for="modalAdminTwoNameEN"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-primary">{{  "COUNTRY.ENGLISH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalAdminTwoNameEN"
+                  class="form-control"
+                  type="text"
+                  id="modalAdminTwoNameEN"
+                  name="modalAdminTwoNameEN"
+                />
+              </div>
+              <!-- Español -->
+              <div class="form-group input-group-sm">
+                <label for="modalAdminTwoNameES"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-danger">{{  "COUNTRY.SPANISH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalAdminTwoNameES"
+                  class="form-control"
+                  type="text"
+                  id="modalAdminTwoNameES"
+                  name="modalAdminTwoNameES"
+                />
+              </div>
+              <!-- Portugues -->
+              <div class="form-group input-group-sm">
+                <label for="modalAdminTwoNamePT"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-warning">{{  "COUNTRY.PORTUGUESE" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalAdminTwoNamePT"
+                  class="form-control"
+                  type="text"
+                  id="modalAdminTwoNamePT"
+                  name="modalAdminTwoNamePT"
+                />
+              </div>
+              <!-- French -->
+              <div class="form-group input-group-sm">
+                <label for="modalAdminTwoNameFR"
+                  >{{  "COUNTRY.NAME" | translate  }}
+                  <span class="badge badge-secondary">{{  "COUNTRY.FRENCH" | translate  }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalAdminTwoNameFR"
+                  class="form-control"
+                  type="text"
+                  id="modalAdminTwoNameFR"
+                  name="modalAdminTwoNameFR"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{  "COUNTRY.CLOSE" | translate  }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateAdminTwo()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{  "COUNTRY.SAVE" | translate  }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

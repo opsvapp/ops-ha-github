@@ -1,0 +1,347 @@
+<div class="container">
+  <!--Titulo-->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 40%">
+    <h4>{{ "DISEASE.MANAGEMENTS" | translate }}</h4>
+  </div>
+  <!--Contenido-->
+  <div class="row">
+    <div class="col-8">
+      <!-- Menu de botones-->
+      <div class="btn-group" role="group" style="margin-bottom: 15px">
+        <button
+          *ngIf="canReview"
+          class="btn btn-secondary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#diseaseTable"
+        >
+          {{ "DISEASE.DISEASESLIST" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <button
+          *ngIf="canCreate"
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#diseaseForm"
+        >
+          {{ "DISEASE.ADDDISEASE" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+      </div>
+      <!-- Area para crear enfermedades -->
+      <div
+        class="collapse"
+        id="diseaseForm"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <!-- Fila-->
+        <div class="row">
+          <!--Primera Columna-->
+          <div
+            class="col-5"
+            style="border-right: dotted 2px silver; padding: 15px"
+          >
+            <!--Ingles-->
+            <span class="badge badge-primary">{{ "DISEASE.ENGLISH" | translate }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_EN">{{ "DISEASE.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameEN"
+                class="form-control"
+                type="text"
+                name="name_EN"
+                id="name_EN"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_EN">{{ "DISEASE.DESCRIPTION" | translate }}</label>
+              <input
+                [(ngModel)]="descriptionEN"
+                class="form-control"
+                type="text"
+                name="description_EN"
+                id="description_EN"
+              />
+            </div>
+            <hr style="border-top: dotted 2px silver" />
+            <!--Español-->
+            <span class="badge badge-danger">{{ "DISEASE.SPANISH" | translate }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_ES">{{ "DISEASE.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameES"
+                class="form-control"
+                type="text"
+                name="name_ES"
+                id="name_ES"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_ES">{{ "DISEASE.DESCRIPTION" | translate }}</label>
+              <input
+                [(ngModel)]="descriptionES"
+                class="form-control"
+                type="text"
+                name="description_ES"
+                id="description_ES"
+              />
+            </div>
+          </div>
+          <!-- Segunda Columna -->
+          <div class="col-5" style="padding: 15px">
+            <!--Portugues-->
+            <span class="badge badge-warning">{{ "DISEASE.PORTUGUESE" | translate }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_PT">{{ "DISEASE.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="namePT"
+                class="form-control"
+                type="text"
+                name="name_PT"
+                id="name_PT"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="disease_PT">{{ "DISEASE.DESCRIPTION" | translate }}</label>
+              <input
+                [(ngModel)]="descriptionPT"
+                class="form-control"
+                type="text"
+                name="description_PT"
+                id="disease_PT"
+              />
+            </div>
+            <hr style="border-top: dotted 2px silver" />
+            <!-- Frances -->
+            <span class="badge badge-secondary">{{ "DISEASE.FRENCH" | translate }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_FR">{{ "DISEASE.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameFR"
+                class="form-control"
+                type="text"
+                name="name_FR"
+                id="name_FR"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_FR">{{ "DISEASE.DESCRIPTION" | translate }}</label>
+              <input
+                [(ngModel)]="descriptionFR"
+                class="form-control"
+                type="text"
+                name="description_FR"
+                id="description_FR"
+              />
+            </div>
+          </div>
+        </div>
+        <button (click)="saveDisease()" class="btn btn-success">
+          {{ "DISEASE.SAVEDISEASE" | translate }}
+          <i-bs name="plus-circle"></i-bs>
+        </button>
+      </div>
+      <!-- tabla de enfermedades -->
+      <div
+        class="collapse"
+        id="diseaseTable"
+        style="
+          border-left: solid 2px coral;
+          padding-left: 10px;
+          margin-top: 15px;
+        "
+      >
+        <table class="table table-striped table-hover table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">{{ "DISEASE.NAME" | translate }}</th>
+              <th scope="col">{{ "DISEASE.DESCRIPTION" | translate }}</th>
+              <th scope="col">{{ "DISEASE.ACTIONS" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of diseaseList">
+              <td>
+                <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+              </td>
+              <td>
+                <span *ngIf="lang == 'es'">{{ item.description_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ item.description_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ item.description_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ item.description_FR }}</span>
+              </td>
+              <td>
+                <div class="btn-group" role="group">
+                  <!--Botones de Acción-->
+                  <button
+                    *ngIf="canUpdate"
+                    (click)="setDiseaseId(item.idDisease)"
+                    type="button"
+                    class="btn btn-warning btn-sm"
+                    data-toggle="modal"
+                    data-target="#datosNuevos"
+                  >
+                    <i-bs name="pencil"></i-bs>
+                  </button>
+                  <button
+                    *ngIf="canDelete"
+                    (click)="deleteDisease(item.idDisease)"
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                  >
+                    <i-bs name="trash"></i-bs>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para actualizar enfermedades -->
+<div
+  class="modal fade"
+  id="datosNuevos"
+  tabindex="-1"
+  aria-labelledby="datosNuevos"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "DISEASE.UPDATEDISEASE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+              <!-- English -->
+              <span class="badge badge-primary">{{ "DISEASE.ENGLISH" | translate }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameEN">{{ "DISEASE.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameEN"
+                  class="form-control"
+                  type="text"
+                  id="modalNameEN"
+                  name="modalNameEN"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionEN">{{ "DISEASE.DESCRIPTION" | translate }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionEN"
+                  class="form-control"
+                  type="text"
+                  id="modalDescriptionEN"
+                  name="modalDescriptionEN"
+                />
+              </div>
+              <!-- Español -->
+              <span class="badge badge-danger">{{ "DISEASE.SPANISH" | translate }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameES">{{ "DISEASE.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameES"
+                  class="form-control"
+                  type="text"
+                  id="modalNameES"
+                  name="modalNameES"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionES">{{ "DISEASE.DESCRIPTION" | translate }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionES"
+                  class="form-control"
+                  type="text"
+                  id="modalDescriptionES"
+                  name="modalDescriptionES"
+                />
+              </div>
+            </div>
+            <div class="col">
+              <!-- Portugues -->
+              <span class="badge badge-warning">{{ "DISEASE.PORTUGUESE" | translate }}</span>
+              <div class="form-group input-group-sm">
+                <label for="namePT">{{ "DISEASE.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNamePT"
+                  class="form-control"
+                  type="text"
+                  id="modalNamePT"
+                  name="modalNamePT"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionPT">{{ "DISEASE.DESCRIPTION" | translate }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionPT"
+                  class="form-control"
+                  type="text"
+                  id="modalDescriptionPT"
+                  name="modalDescriptionPT"
+                />
+              </div>
+              <!-- French -->
+              <span class="badge badge-secondary">{{ "DISEASE.FRENCH" | translate }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameEN">{{ "DISEASE.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameFR"
+                  class="form-control"
+                  type="text"
+                  id="modalNameFR"
+                  name="modalNameFR"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionFR">{{ "DISEASE.DESCRIPTION" | translate }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionFR"
+                  class="form-control"
+                  type="text"
+                  id="modalDescriptionFR"
+                  name="modalDescriptionFR"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "DISEASE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateDisease()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+        {{ "DISEASE.SAVE" | translate }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

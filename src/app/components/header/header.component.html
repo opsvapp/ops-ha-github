@@ -1,0 +1,275 @@
+<!-- Header y Menu-->
+<div class="container">
+  <!-- Header -->
+  <div class="row align-items-center" style="height: 125px">
+    <div class="col d-flex justify-content-start">
+      <img
+        *ngIf="lang == 'en'"
+        src="../../../assets/logo/logo_EN.svg"
+        style="height: 70px"
+      />
+      <img
+        *ngIf="lang == 'es'"
+        src="../../../assets/logo/logo_ES.svg"
+        style="height: 70px"
+      />
+      <img
+        *ngIf="lang == 'pt'"
+        src="../../../assets/logo/logo_PT.svg"
+        style="height: 70px"
+      />
+      <img
+        *ngIf="lang == 'fr'"
+        src="../../../assets/logo/logo_FR.svg"
+        style="height: 70px"
+      />
+    </div>
+    <div class="col d-flex justify-content-end">
+      <h5
+        style="
+          color: rgb(30, 127, 184);
+          font-family: 'Open Sans', sans-serif;
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 40px;
+          margin: 0 0 16px;
+        "
+      >
+        {{ "HEADER.HA" | translate }}
+      </h5>
+    </div>
+  </div>
+  <!-- Menu -->
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#" routerLink="/lobby">{{
+      "HEADER.APPTITLE" | translate
+    }}</a>
+    <!-- Boton Colapsable -->
+    <div class="navbar-toggler">
+      <div class="dropdown lang" style="display: inline-block">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdownMenuLang"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i-bs name="globe" width="18px" height="18px"></i-bs> {{ lang }}
+        </a>
+        <div
+          class="dropdown-menu lang"
+          aria-labelledby="navbarDropdownMenuLang"
+        >
+          <a class="dropdown-item" (click)="updateLanguage('en')"
+            ><span class="flag-icon flag-icon-us"></span> English</a
+          >
+          <a class="dropdown-item" (click)="updateLanguage('es')"
+            ><span class="flag-icon flag-icon-es"></span> Español</a
+          >
+          <a class="dropdown-item" (click)="updateLanguage('pt')"
+            ><span class="flag-icon flag-icon-pt"></span> Português</a
+          >
+          <a class="dropdown-item" (click)="updateLanguage('fr')"
+            ><span class="flag-icon flag-icon-fr"></span> Français</a
+          >
+        </div>
+      </div>
+      <button
+        type="button"
+        data-toggle="collapse"
+        data-target="#menu"
+        aria-controls="menu"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <!-- Items del Menu -->
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <!-- Usuario y Perfiles-->
+        <li *ngIf="canReviewUsers" class="nav-item">
+          <a class="nav-link" href="#" routerLink="/users">
+            <i-bs name="person-circle"></i-bs>
+            {{ "HEADER.USERS" | translate }}
+          </a>
+        </li>
+        <li *ngIf="canReviewProfiles" class="nav-item">
+          <a class="nav-link" href="#" routerLink="/profiles">
+            <i-bs name="file-lock2"></i-bs>
+            {{ "HEADER.PROFILES" | translate }}
+          </a>
+        </li>
+        <!-- Sub Menu de Noticias -->
+        <li *ngIf="canReviewNews" class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown1"
+            role="button"
+            data-toggle="dropdown"
+          >
+            <i-bs name="newspaper"></i-bs>
+            {{ "HEADER.NEWS" | translate }}
+          </a>
+          <div class="dropdown-menu">
+            <a
+              *ngIf="canCreateNews"
+              (click)="clearUpdateMode()"
+              class="dropdown-item"
+              href="#"
+              routerLink="/news"
+            >
+              {{ "HEADER.EDITNEWS" | translate }}
+            </a>
+            <a
+              *ngIf="canReviewNews"
+              class="dropdown-item"
+              href="#"
+              routerLink="/archive"
+              >{{ "HEADER.CHECKNEWS" | translate }}</a
+            >
+          </div>
+        </li>
+        <!-- Sub Menu de Gestiones -->
+        <li *ngIf="canManageApp" class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown2"
+            role="button"
+            data-toggle="dropdown"
+          >
+            <i-bs name="clipboard-data"></i-bs>
+            {{ "HEADER.APP" | translate }}
+          </a>
+          <div class="dropdown-menu">
+            <a
+              *ngIf="canReviewVaccines"
+              class="dropdown-item"
+              href="#"
+              routerLink="/vaccine"
+              >{{ "HEADER.VACCINES" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewDiseases"
+              class="dropdown-item"
+              href="#"
+              routerLink="/disease"
+              >{{ "HEADER.DISEASES" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewEffects"
+              class="dropdown-item"
+              href="#"
+              routerLink="/effects"
+              >{{ "HEADER.EFFECTS" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewScheme"
+              class="dropdown-item"
+              href="#"
+              routerLink="/scheme"
+              >{{ "HEADER.SCHEMES" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewCountry || canReviewAdminOne || canReviewAdminTwo"
+              class="dropdown-item"
+              href="#"
+              routerLink="/country"
+              >{{ "HEADER.COUNTRIES" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewTravel"
+              class="dropdown-item"
+              href="#"
+              routerLink="/travel"
+              >{{ "HEADER.TRAVELVACCINE" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewVaccineCountry"
+              class="dropdown-item"
+              href="#"
+              routerLink="/countryVaccine"
+              >{{ "HEADER.VACCINECOUNTRY" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewHealthCenter"
+              class="dropdown-item"
+              href="#"
+              routerLink="/healthCenter"
+              >{{ "HEADER.HEALTHCENTER" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewVaccineCenter"
+              class="dropdown-item"
+              href="#"
+              routerLink="/vaccineCenter"
+              >{{ "HEADER.VACCINEPERHEALTHCENTER" | translate }}</a
+            >
+            <a
+              *ngIf="canReviewVaccinationPoint"
+              class="dropdown-item"
+              href="#"
+              routerLink="/vaccinationPoint"
+              >{{ "HEADER.VACCINEPOINT" | translate }}</a
+            >
+            <a
+              *ngIf="canUploadFiles"
+              class="dropdown-item"
+              href="#"
+              routerLink="/upload"
+              style="color: rgb(30, 127, 184)"
+              >{{ "HEADER.UPLOAD" | translate }}</a
+            >
+          </div>
+        </li>
+        <!-- Bitacora -->
+        <li *ngIf="canReviewLogs" class="nav-item">
+          <a class="nav-link" href="#" routerLink="/logs">
+            <i-bs name="journal"></i-bs>
+            {{ "HEADER.LOGS" | translate }}
+          </a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+        <!-- Dropdown idioma -->
+        <div class="d-lg-block d-none dropdown lang">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownMenuLang"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i-bs name="globe" width="20px" height="20px"></i-bs> {{ lang }}
+          </a>
+          <div
+            class="dropdown-menu lang"
+            aria-labelledby="navbarDropdownMenuLang"
+          >
+            <a class="dropdown-item" (click)="updateLanguage('en')"
+              ><span class="flag-icon flag-icon-us"></span> English</a
+            >
+            <a class="dropdown-item" (click)="updateLanguage('es')"
+              ><span class="flag-icon flag-icon-es"></span> Español</a
+            >
+            <a class="dropdown-item" (click)="updateLanguage('pt')"
+              ><span class="flag-icon flag-icon-pt"></span> Português</a
+            >
+            <a class="dropdown-item" (click)="updateLanguage('fr')"
+              ><span class="flag-icon flag-icon-fr"></span> Français</a
+            >
+          </div>
+        </div>
+        <!-- Boton de Cerrar Sesion -->
+        <button class="btn btn-danger my-2 my-sm-0" (click)="logOut()">
+          <i-bs name="box-arrow-right"></i-bs>
+        </button>
+      </form>
+    </div>
+  </nav>
+</div>

@@ -1,0 +1,853 @@
+<div class="container">
+  <!--Titulo-->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 33%">
+    <h4>{{ "VACCINE.MANAGEMENTS" | translate }}</h4>
+  </div>
+  <!--Contenido-->
+  <div class="row">
+    <div class="col">
+      <!-- Menu de botones-->
+      <div class="btn-group" role="group" style="margin-bottom: 15px">
+        <button
+          *ngIf="canReview"
+          class="btn btn-secondary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#vaccineTable"
+        >
+          {{ "VACCINE.VACCINELIST" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <button
+          *ngIf="canCreate"
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#vaccineForm"
+        >
+          {{ "VACCINE.ADDVACCINE" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+      </div>
+      <!-- Area para crear vacunas -->
+      <div
+        class="collapse"
+        id="vaccineForm"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <!-- Fila-->
+        <div class="row">
+          <!--Primera Columna-->
+          <div
+            class="col-5"
+            style="border-right: dotted 2px silver; padding: 15px"
+          >
+            <!--Ingles-->
+            <span class="badge badge-primary">{{
+              "VACCINE.ENGLISH" | translate
+            }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_EN">{{ "VACCINE.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameEN"
+                class="form-control"
+                type="text"
+                name="name_EN"
+                id="name_EN"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="title_EN">{{ "VACCINE.TITLE" | translate }}</label>
+              <input
+                [(ngModel)]="titleEN"
+                class="form-control"
+                type="text"
+                name="title_EN"
+                id="title_EN"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="admin_EN">{{
+                "VACCINE.ADMINISTRATION" | translate
+              }}</label>
+              <input
+                [(ngModel)]="adminEN"
+                class="form-control"
+                type="text"
+                name="admin_EN"
+                id="admin_EN"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_EN">{{
+                "VACCINE.DESCRIPTION" | translate
+              }}</label>
+              <input
+                [(ngModel)]="descriptionEN"
+                class="form-control"
+                type="text"
+                name="description_EN"
+                id="description_EN"
+              />
+            </div>
+            <hr style="border-top: dotted 2px silver" />
+            <!--Español-->
+            <span class="badge badge-danger">{{
+              "VACCINE.SPANISH" | translate
+            }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_ES">{{ "VACCINE.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameES"
+                class="form-control"
+                type="text"
+                name="name_ES"
+                id="name_ES"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="title_ES">{{ "VACCINE.TITLE" | translate }}</label>
+              <input
+                [(ngModel)]="titleES"
+                class="form-control"
+                type="text"
+                name="title_ES"
+                id="title_ES"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="admin_ES">{{
+                "VACCINE.ADMINISTRATION" | translate
+              }}</label>
+              <input
+                [(ngModel)]="adminES"
+                class="form-control"
+                type="text"
+                name="admin_ES"
+                id="admin_ES"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_ES">{{
+                "VACCINE.DESCRIPTION" | translate
+              }}</label>
+              <input
+                [(ngModel)]="descriptionES"
+                class="form-control"
+                type="text"
+                name="description_ES"
+                id="description_ES"
+              />
+            </div>
+          </div>
+          <!-- Segunda Columna -->
+          <div class="col-5" style="padding: 15px">
+            <!--Portugues-->
+            <span class="badge badge-warning">{{
+              "VACCINE.PORTUGUESE" | translate
+            }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_PT">{{ "VACCINE.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="namePT"
+                class="form-control"
+                type="text"
+                name="name_PT"
+                id="name_PT"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="title_PT">{{ "VACCINE.TITLE" | translate }}</label>
+              <input
+                [(ngModel)]="titlePT"
+                class="form-control"
+                type="text"
+                name="title_PT"
+                id="title_PT"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="admin_PT">{{
+                "VACCINE.ADMINISTRATION" | translate
+              }}</label>
+              <input
+                [(ngModel)]="adminPT"
+                class="form-control"
+                type="text"
+                name="admin_PT"
+                id="admin_PT"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_PT">{{
+                "VACCINE.DESCRIPTION" | translate
+              }}</label>
+              <input
+                [(ngModel)]="descriptionPT"
+                class="form-control"
+                type="text"
+                name="description_PT"
+                id="description_PT"
+              />
+            </div>
+            <hr style="border-top: dotted 2px silver" />
+            <!-- Frances -->
+            <span class="badge badge-secondary">{{
+              "VACCINE.FRENCH" | translate
+            }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_FR">{{ "VACCINE.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameFR"
+                class="form-control"
+                type="text"
+                name="name_FR"
+                id="name_FR"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="title_FR">{{ "VACCINE.TITLE" | translate }}</label>
+              <input
+                [(ngModel)]="titleFR"
+                class="form-control"
+                type="text"
+                name="title_FR"
+                id="title_FR"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="admin_FR">{{
+                "VACCINE.ADMINISTRATION" | translate
+              }}</label>
+              <input
+                [(ngModel)]="adminFR"
+                class="form-control"
+                type="text"
+                name="admin_FR"
+                id="admin_FR"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_FR">{{
+                "VACCINE.DESCRIPTION" | translate
+              }}</label>
+              <input
+                [(ngModel)]="descriptionFR"
+                class="form-control"
+                type="text"
+                name="description_FR"
+                id="description_FR"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!--Area para asignacion de enfermedades y efectos secundarios-->
+        <div class="row" style="margin-bottom: 15px; margin-top: 15px">
+          <div class="col">
+            <div class="btn-group">
+              <button
+                class="btn btn-primary"
+                data-toggle="modal"
+                data-target="#modalEnfermedades"
+              >
+                {{ "VACCINE.ASSIGNDISEASE" | translate }}
+              </button>
+              <button
+                class="btn btn-secondary"
+                data-toggle="modal"
+                data-target="#modalEfectos"
+              >
+                {{ "VACCINE.ASSIGNEFFECT" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--Ubicacion del boton de guardar-->
+        <div class="row">
+          <div class="col">
+            <button (click)="saveVaccine()" class="btn btn-success">
+              {{ "VACCINE.KEEPV" | translate }}
+              <i-bs name="plus-circle"></i-bs>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--No borrar este DIV-->
+      <!-- tabla de vacunas -->
+      <div
+        class="collapse"
+        id="vaccineTable"
+        style="
+          border-left: solid 2px coral;
+          padding-left: 10px;
+          margin-top: 15px;
+        "
+      >
+        <table class="table table-striped table-hover table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>{{ "VACCINE.NAME" | translate }}</th>
+              <th>{{ "VACCINE.TITLE" | translate }}</th>
+              <th>{{ "VACCINE.ADMINISTRATION" | translate }}</th>
+              <th>{{ "VACCINE.DESCRIPTION" | translate }}</th>
+              <th>{{ "VACCINE.ACTIONS" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of vaccineList">
+              <td>{{ item.idVaccine }}</td>
+              <td>
+                <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+              </td>
+              <td>
+                <span *ngIf="lang == 'es'">{{ item.title_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ item.title_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ item.title_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ item.title_FR }}</span>
+              </td>
+              <td>
+                <span *ngIf="lang == 'es'">{{ item.administration_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ item.administration_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ item.administration_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ item.administration_FR }}</span>
+              </td>
+              <td>
+                <span *ngIf="lang == 'es'">{{ item.description_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ item.description_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ item.description_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ item.description_FR }}</span>
+              </td>
+              <td>
+                <div class="btn-group" role="group">
+                  <!--Botones de Acción-->
+                  <!-- Este sera mi botón para asignar país a cada vacuna -->
+                  <button
+                    *ngIf="canUpdate"
+                    (click)="setVaccineIdCountry(item.idVaccine)"
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#asignaPais"
+                  >
+                    <i-bs name="flag"></i-bs>
+                  </button>
+                  <button
+                    *ngIf="canUpdate"
+                    (click)="setVaccineId(item.idVaccine)"
+                    type="button"
+                    class="btn btn-warning btn-sm"
+                    data-toggle="modal"
+                    data-target="#datosNuevos"
+                  >
+                    <i-bs name="pencil"></i-bs>
+                  </button>
+
+                  <button
+                    *ngIf="canDelete"
+                    (click)="deleteVaccine(item.idVaccine)"
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                  >
+                    <i-bs name="trash"></i-bs>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal para asignar país a una vacuna -->
+<div
+  class="modal fade"
+  id="asignaPais"
+  tabindex="-1"
+  aria-labelledby="asignaPais"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "VACCINE.UPDATEVACCINE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Listados-->
+        <form style="margin-top: 15px">
+          <div class="form-row">
+            <!--Enfermedades-->
+            <!-- <div class="col">
+              <div class="form-row separador">
+                <h6 style="color: white">
+                  {{ "VACCINE.DISEASE" | translate }}
+                </h6>
+              </div>
+              <div *ngFor="let item of diseaseList" class="form-group">
+                <div class="form-check">
+                  <input
+                    (click)="setUpdatedDiseases(item.idDisease)"
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="hasDisease(item.idDisease)"
+                  />
+                  <label class="form-check-label">
+                    <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                    <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                    <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                    <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+                  </label>
+                </div>
+              </div>
+            </div> -->
+            <!--Efectos secundarios-->
+            <div class="col">
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "COUNTRY.COUNTRIES" | translate }}</h6>
+              </div>
+              <div *ngFor="let item of countriesList" class="form-group">
+                <div class="form-check">
+                  <input
+                    (click)="updateModal(item)"
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="item.checked"
+                    
+                    
+                  />
+                  <label class="form-check-label">
+                    <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                    <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                    <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                    <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VACCINE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateVaccine_Country()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{ "VACCINE.KEEP" | translate }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal para actualizar vacuna -->
+<div
+  class="modal fade"
+  id="datosNuevos"
+  tabindex="-1"
+  aria-labelledby="datosNuevos"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "VACCINE.UPDATEVACCINE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+              <!-- English -->
+              <span class="badge badge-primary">{{
+                "VACCINE.ENGLISH" | translate
+              }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameEN">{{ "VACCINE.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameEN"
+                  class="form-control"
+                  type="text"
+                  id="nameEN"
+                  name="nameEN"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="titleEN">{{ "VACCINE.TITLE" | translate }}</label>
+                <input
+                  [(ngModel)]="modalTitleEN"
+                  class="form-control"
+                  type="text"
+                  id="titleEN"
+                  name="titleEN"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="adminEN">{{
+                  "VACCINE.ADMINISTRATION" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalAdminEN"
+                  class="form-control"
+                  type="text"
+                  id="adminEN"
+                  name="adminEN"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionEN">{{
+                  "VACCINE.DESCRIPTION" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionEN"
+                  class="form-control"
+                  type="text"
+                  id="descriptionEN"
+                  name="descriptionEN"
+                />
+              </div>
+              <!-- Español -->
+              <span class="badge badge-danger">{{
+                "VACCINE.SPANISH" | translate
+              }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameES">{{ "VACCINE.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameES"
+                  class="form-control"
+                  type="text"
+                  id="nameES"
+                  name="nameES"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="titleES">{{ "VACCINE.TITLE" | translate }}</label>
+                <input
+                  [(ngModel)]="modalTitleES"
+                  class="form-control"
+                  type="text"
+                  id="titleES"
+                  name="titleES"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="adminES">{{
+                  "VACCINE.ADMINISTRATION" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalAdminES"
+                  class="form-control"
+                  type="text"
+                  id="adminES"
+                  name="adminES"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionES">{{
+                  "VACCINE.DESCRIPTION" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionES"
+                  class="form-control"
+                  type="text"
+                  id="descriptionES"
+                  name="descriptionES"
+                />
+              </div>
+            </div>
+            <div class="col">
+              <!-- Portugues -->
+              <span class="badge badge-warning">{{
+                "VACCINE.PORTUGUESE" | translate
+              }}</span>
+              <div class="form-group input-group-sm">
+                <label for="namePT">{{ "VACCINE.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNamePT"
+                  class="form-control"
+                  type="text"
+                  id="namePT"
+                  name="namePT"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="titlePT">{{ "VACCINE.TITLE" | translate }}</label>
+                <input
+                  [(ngModel)]="modalTitlePT"
+                  class="form-control"
+                  type="text"
+                  id="titlePT"
+                  name="titlePT"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="adminPT">{{
+                  "VACCINE.ADMINISTRATION" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalAdminPT"
+                  class="form-control"
+                  type="text"
+                  id="adminPT"
+                  name="adminPT"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionPT">{{
+                  "VACCINE.DESCRIPTION" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionPT"
+                  class="form-control"
+                  type="text"
+                  id="descriptionPT"
+                  name="descriptionPT"
+                />
+              </div>
+              <!-- French -->
+              <span class="badge badge-secondary">{{
+                "VACCINE.FRENCH" | translate
+              }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameEN">{{ "VACCINE.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameFR"
+                  class="form-control"
+                  type="text"
+                  id="nameFR"
+                  name="nameFR"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="titleFR">{{ "VACCINE.TITLE" | translate }}</label>
+                <input
+                  [(ngModel)]="modalTitleFR"
+                  class="form-control"
+                  type="text"
+                  id="titleFR"
+                  name="titleFR"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="adminFR">{{
+                  "VACCINE.ADMINISTRATION" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalAdminFR"
+                  class="form-control"
+                  type="text"
+                  id="adminFR"
+                  name="adminFR"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionFR">{{
+                  "VACCINE.DESCRIPTION" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionFR"
+                  class="form-control"
+                  type="text"
+                  id="descriptionFR"
+                  name="descriptionFR"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+        <!--Listados-->
+        <form style="margin-top: 15px">
+          <div class="form-row">
+            <!--Enfermedades-->
+            <div class="col">
+              <div class="form-row separador">
+                <h6 style="color: white">
+                  {{ "VACCINE.DISEASE" | translate }}
+                </h6>
+              </div>
+              <div *ngFor="let item of diseaseList" class="form-group">
+                <div class="form-check">
+                  <input
+                    (click)="setUpdatedDiseases(item.idDisease)"
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="hasDisease(item.idDisease)"
+                  />
+                  <label class="form-check-label">
+                    <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                    <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                    <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                    <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!--Efectos secundarios-->
+            <div class="col">
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "VACCINE.EFFECT" | translate }}</h6>
+              </div>
+              <div *ngFor="let item of effectsList" class="form-group">
+                <div class="form-check">
+                  <input
+                    (click)="setUpdatedEffect(item.idSecondary_Effect)"
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="hasEffect(item.idSecondary_Effect)"
+                  />
+                  <label class="form-check-label">
+                    <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                    <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                    <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                    <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VACCINE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateVaccine()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{ "VACCINE.KEEP" | translate }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para seleccion de enfermedades-->
+<div class="modal fade" id="modalEnfermedades" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "VACCINE.ASSIGNDISEASE2" | translate }}</h5>
+        <br />
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Generar el listado de checkbox-->
+        <div class="form-row separador">
+          <h6 style="color: white">{{ "VACCINE.DISEASEA" | translate }}:</h6>
+        </div>
+        <div class="form-row ficha">
+          <form>
+            <div *ngFor="let item of diseaseList" class="form-group">
+              <div class="form-check">
+                <input
+                  (click)="setDiseases(item.idDisease)"
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="'disease_' + item.idDisease"
+                />
+                <label class="form-check-label">
+                  <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+          <i-bs name="x-circle"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para seleccion de efectos secundarios-->
+<div class="modal fade" id="modalEfectos" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "VACCINE.ASSIGNEFFECT2" | translate }}</h5>
+        <br />
+        <button type="button" class="close" data-dismiss="modal">
+          <span> &times; </span>
+        </button>
+      </div>
+      <!-- Generar el listado de checkbox-->
+      <div class="modal-body">
+        <div class="form-row separador">
+          <h6 style="color: white">{{ "VACCINE.EFFECTA" | translate }}:</h6>
+        </div>
+        <div class="form-row ficha">
+          <form>
+            <div *ngFor="let item of effectsList" class="form-group">
+              <div class="form-check">
+                <input
+                  (click)="setEffect(item.idSecondary_Effect)"
+                  class="form-check-input"
+                  type="checkbox"
+                  [id]="'effect_' + item.idSecondary_Effect"
+                />
+                <label class="form-check-label">
+                  <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+          <i-bs name="x-circle"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

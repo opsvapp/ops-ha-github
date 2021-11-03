@@ -1,0 +1,347 @@
+<div class="container">
+  <!--Titulo-->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 45%">
+    <h4>{{ "EFFECTS.MANAGEMENTS" | translate }}</h4>
+  </div>
+  <!--Contenido-->
+  <div class="row">
+    <div class="col-md-8">
+      <!-- Menu de botones-->
+      <div class="btn-group" role="group" style="margin-bottom: 15px">
+        <button
+          *ngIf="canReview"
+          class="btn btn-secondary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#effectTable"
+        >
+          {{ "EFFECTS.EFFECTSLIST" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <button
+          *ngIf="canCreate"
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#effectForm"
+        >
+          {{ "EFFECTS.ADDEFFECT" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+      </div>
+      <!-- Area para crear efectos -->
+      <div
+        class="collapse"
+        id="effectForm"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <!-- Fila-->
+        <div class="row">
+          <!--Primera Columna-->
+          <div
+            class="col"
+            style="border-right: dotted 2px silver; padding: 15px"
+          >
+            <!--Ingles-->
+            <span class="badge badge-primary">{{ "EFFECTS.ENGLISH" | translate }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_EN">{{ "EFFECTS.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameEN"
+                class="form-control"
+                type="text"
+                name="name_EN"
+                id="name_EN"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_EN">{{ "EFFECTS.DESCRIPTION" | translate }}</label>
+              <input
+                [(ngModel)]="descriptionEN"
+                class="form-control"
+                type="text"
+                name="description_EN"
+                id="description_EN"
+              />
+            </div>
+            <hr style="border-top: dotted 2px silver" />
+            <!--Español-->
+            <span class="badge badge-danger">{{ "EFFECTS.SPANISH" | translate }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_ES">{{ "EFFECTS.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameES"
+                class="form-control"
+                type="text"
+                name="name_ES"
+                id="name_ES"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_ES">{{ "EFFECTS.DESCRIPTION" | translate }}</label>
+              <input
+                [(ngModel)]="descriptionES"
+                class="form-control"
+                type="text"
+                name="description_ES"
+                id="description_ES"
+              />
+            </div>
+          </div>
+          <!-- Segunda Columna -->
+          <div class="col" style="padding: 15px">
+            <!--Portugues-->
+            <span class="badge badge-warning">{{ "EFFECTS.PORTUGUESE" | translate }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_PT">{{ "EFFECTS.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="namePT"
+                class="form-control"
+                type="text"
+                name="name_PT"
+                id="name_PT"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="disease_PT">{{ "EFFECTS.DESCRIPTION" | translate }}</label>
+              <input
+                [(ngModel)]="descriptionPT"
+                class="form-control"
+                type="text"
+                name="description_PT"
+                id="disease_PT"
+              />
+            </div>
+            <hr style="border-top: dotted 2px silver" />
+            <!-- Frances -->
+            <span class="badge badge-secondary">{{ "EFFECTS.FRENCH" | translate }}</span>
+            <div class="form-group input-group-sm">
+              <label for="name_FR">{{ "EFFECTS.NAME" | translate }}</label>
+              <input
+                [(ngModel)]="nameFR"
+                class="form-control"
+                type="text"
+                name="name_FR"
+                id="name_FR"
+              />
+            </div>
+            <div class="form-group input-group-sm">
+              <label for="description_FR">{{ "EFFECTS.DESCRIPTION" | translate }}</label>
+              <input
+                [(ngModel)]="descriptionFR"
+                class="form-control"
+                type="text"
+                name="description_FR"
+                id="description_FR"
+              />
+            </div>
+          </div>
+        </div>
+        <button (click)="saveEffect()" class="btn btn-success">
+          {{ "EFFECTS.SAVEEFFECT" | translate }}
+          <i-bs name="plus-circle"></i-bs>
+        </button>
+      </div>
+      <!-- tabla de efectos secundarios -->
+      <div
+        class="collapse"
+        id="effectTable"
+        style="
+          border-left: solid 2px coral;
+          padding-left: 10px;
+          margin-top: 15px;
+        "
+      >
+        <table class="table table-striped table-hover table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>{{ "EFFECTS.NAME" | translate }}</th>
+              <th>{{ "EFFECTS.DESCRIPTION" | translate }}</th>
+              <th>{{ "EFFECTS.ACTIONS" | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of effectList">
+              <td>
+                <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+              </td>
+              <td>
+                <span *ngIf="lang == 'es'">{{ item.description_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ item.description_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ item.description_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ item.description_FR }}</span>
+              </td>
+              <td>
+                <div class="btn-group" role="group">
+                  <!--Botones de Acción-->
+                  <button
+                    *ngIf="canUpdate"
+                    (click)="setEffectId(item.idSecondary_Effect)"
+                    type="button"
+                    class="btn btn-warning btn-sm"
+                    data-toggle="modal"
+                    data-target="#datosNuevos"
+                  >
+                    <i-bs name="pencil"></i-bs>
+                  </button>
+                  <button
+                    *ngIf="canDelete"
+                    (click)="deleteEffect(item.idSecondary_Effect)"
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                  >
+                    <i-bs name="trash"></i-bs>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para actualizar efectos -->
+<div
+  class="modal fade"
+  id="datosNuevos"
+  tabindex="-1"
+  aria-labelledby="datosNuevos"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "EFFECTS.UPDATEEFFECT" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+              <!-- English -->
+              <span class="badge badge-primary">{{ "EFFECTS.ENGLISH" | translate }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameEN">{{ "EFFECTS.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameEN"
+                  class="form-control"
+                  type="text"
+                  id="nameEN"
+                  name="nameEN"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionEN">{{ "EFFECTS.DESCRIPTION" | translate }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionEN"
+                  class="form-control"
+                  type="text"
+                  id="descriptionEN"
+                  name="descriptionEN"
+                />
+              </div>
+              <!-- Español -->
+              <span class="badge badge-danger">{{ "EFFECTS.SPANISH" | translate }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameES">{{ "EFFECTS.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameES"
+                  class="form-control"
+                  type="text"
+                  id="nameES"
+                  name="nameES"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionES">{{ "EFFECTS.DESCRIPTION" | translate }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionES"
+                  class="form-control"
+                  type="text"
+                  id="descriptionES"
+                  name="descriptionES"
+                />
+              </div>
+            </div>
+            <div class="col">
+              <!-- Portugues -->
+              <span class="badge badge-warning">{{ "EFFECTS.PORTUGUESE" | translate }}</span>
+              <div class="form-group input-group-sm">
+                <label for="namePT">{{ "EFFECTS.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNamePT"
+                  class="form-control"
+                  type="text"
+                  id="namePT"
+                  name="namePT"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionPT">{{ "EFFECTS.DESCRIPTION" | translate }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionPT"
+                  class="form-control"
+                  type="text"
+                  id="descriptionPT"
+                  name="descriptionPT"
+                />
+              </div>
+              <!-- French -->
+              <span class="badge badge-secondary">{{ "EFFECTS.FRENCH" | translate }}</span>
+              <div class="form-group input-group-sm">
+                <label for="nameEN">{{ "EFFECTS.NAME" | translate }}</label>
+                <input
+                  [(ngModel)]="modalNameFR"
+                  class="form-control"
+                  type="text"
+                  id="nameFR"
+                  name="nameFR"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="descriptionFR">{{ "EFFECTS.DESCRIPTION" | translate }}</label>
+                <input
+                  [(ngModel)]="modalDescriptionFR"
+                  class="form-control"
+                  type="text"
+                  id="descriptionFR"
+                  name="descriptionFR"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "EFFECTS.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateEffect()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{ "EFFECTS.SAVE" | translate }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

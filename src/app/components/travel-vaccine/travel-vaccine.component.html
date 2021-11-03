@@ -1,0 +1,204 @@
+<div class="container">
+  <!--Titulo-->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 45%">
+    <h4>{{ "TRAVELVACCINE.TITLE" | translate }}</h4>
+  </div>
+  <!--Contenido-->
+  <div class="row">
+    <!-- Tabla de Paises -->
+    <div *ngIf="canCreate" class="col-md-3">
+      <form>
+        <!-- Listado de Paises -->
+        <div class="form-group">
+          <label for="pais">{{ "TRAVELVACCINE.SELECTCOUNTRY" | translate }}</label>
+          <select
+            [(ngModel)]="country"
+            (ngModelChange)="onChangeCountry($event)"
+            class="form-control"
+            name="ctry"
+            id="ctry"
+          >
+            <option
+              *ngFor="let i of countryList;"
+              [value]="i.idCountry"
+            >
+              <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+              <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+              <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+              <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+            </option>
+          </select>
+        </div>
+        <!-- Listado de Vacunas -->
+        <div class="form-group">
+          <label for="vac">{{ "TRAVELVACCINE.SELECTVACCINE" | translate }}</label>
+          <select
+            [(ngModel)]="vaccine"
+            (ngModelChange)="onChangeVaccine($event)"
+            class="form-control"
+            name="vac"
+            id="vac"
+          >
+            <option
+              *ngFor="let vaccine of vaccineList"
+              [value]="vaccine.idVaccine"
+            >
+              <span *ngIf="lang == 'es'">{{ vaccine.name_ES }}</span>
+              <span *ngIf="lang == 'en'">{{ vaccine.name_EN }}</span>
+              <span *ngIf="lang == 'pt'">{{ vaccine.name_PT }}</span>
+              <span *ngIf="lang == 'fr'">{{ vaccine.name_FR }}</span>
+            </option>
+          </select>
+        </div>
+        <hr />
+        <!-- Requerido y validity -->
+        <div class="form-check">
+          <input
+            [(ngModel)]="requiredVaccine"
+            class="form-check-input"
+            type="checkbox"
+            name="req"
+            id="req"
+          />
+          <label class="form-check-label" for="required">
+            {{ "TRAVELVACCINE.QREQUIRED" | translate }}
+          </label>
+        </div>
+        <hr />
+        <div class="form-group">
+          <label for="validity">{{ "TRAVELVACCINE.VALIDTIME" | translate }}</label>
+          <input
+            [(ngModel)]="validity"
+            class="form-control"
+            type="number"
+            name="validityCheck"
+            id="validityCheck"
+          />
+        </div>
+        <hr />
+        <!-- Boton para agregar -->
+        <div class="form-group">
+          <button
+            (click)="saveTravelVaccine()"
+            type="button"
+            class="btn btn-success btn-sm"
+          >
+          {{ "TRAVELVACCINE.ADD" | translate }}
+            <i-bs name="plusCircle"></i-bs>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tabla de Vacunas Asignadas al Pais -->
+    <div class="col-md-9">
+      <div style="overflow-y: auto; max-height: 500px; margin-bottom: 15px">
+        <table class="table table-striped table-hover table-sm">
+          <thead class="thead-dark">
+            <th>{{ "TRAVELVACCINE.VACCINE" | translate }}</th>
+            <th>{{ "TRAVELVACCINE.STATE" | translate }}</th>
+            <th>{{ "TRAVELVACCINE.VALIDTIME" | translate }}</th>
+            <th>{{ "TRAVELVACCINE.ACTIONS" | translate }}</th>
+          </thead>
+          <tbody>
+            <!-- Genera lista de paises -->
+            <tr *ngFor="let i of countryVaccineList">
+              <td>
+                <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+              </td>
+              <td *ngIf="i.required == '1'; else elseBlock">{{ "TRAVELVACCINE.REQUIRED" | translate }}</td>
+              <ng-template #elseBlock>
+                <td>{{ "TRAVELVACCINE.NOREQUIRED" | translate }}</td>
+              </ng-template>
+              <td>{{ i.validityMonths }}</td>
+              <td>
+                <button
+                  *ngIf="canUpdate"
+                  (click)="setUpdateId(i.idVaccine)"
+                  type="button"
+                  class="btn btn-info btn-sm"
+                  data-toggle="modal"
+                  data-target="#modalConfig"
+                >
+                  <i-bs name="pencil"></i-bs>
+                </button>
+                <button
+                  *ngIf="canDelete"
+                  (click)="deleteCountryVaccine(i.idVaccine)"
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                >
+                  <i-bs name="trash"></i-bs>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal para configurar la vacuna para viajar-->
+<div class="modal fade" id="modalConfig" tabindex="-1">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "TRAVELVACCINE.REQUIREDTRAV" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!--Cuerpo del Modal-->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="form-check">
+              <input
+                [(ngModel)]="modalMandatory"
+                class="form-check-input"
+                type="checkbox"
+                id="mandatory"
+              />
+              <label class="form-check-label" for="mandatory">{{ "TRAVELVACCINE.REQUIRED" | translate }}</label>
+            </div>
+          </div>
+          <div class="col">
+            <label for="months">{{ "TRAVELVACCINE.VALIDTIME" | translate }}</label>
+            <input
+              [(ngModel)]="modalMonths"
+              class="form-control"
+              type="number"
+              name="months"
+              id="months"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "TRAVELVACCINE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="updateCountryVaccine()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+        {{ "TRAVELVACCINE.SAVE" | translate }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

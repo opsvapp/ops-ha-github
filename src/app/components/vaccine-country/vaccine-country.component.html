@@ -1,0 +1,291 @@
+<div class="container">
+  <!--Titulo-->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 45%">
+    <h4>{{ "VACCINECOUNTRY.TITLE" | translate }}</h4>
+  </div>
+  <!-- Listas -->
+  <div class="row">
+    <!-- Formulario de Datos -->
+    <div *ngIf="canReview" class="col">
+      <form>
+        <div class="form-row">
+          <!-- Pais -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="country">{{ "VACCINECOUNTRY.SELECTCOUNTRY" | translate }}</label>
+              <select
+                [(ngModel)]="countryId"
+                (ngModelChange)="onChangeCountry($event)"
+                class="form-control"
+                name="country"
+                id="country"
+              >
+                <option [value]="-1" selected>{{ "VACCINECOUNTRY.SELECT" | translate }}</option>
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+          <!-- Esquema -->
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="scheme">{{ "VACCINECOUNTRY.SELECTSCHEME" | translate }}</label>
+              <select
+                [(ngModel)]="schemeId"
+                class="form-control"
+                name="scheme"
+                id="scheme"
+              >
+                <option [value]="-1" selected>{{ "VACCINECOUNTRY.SELECT" | translate }}</option>
+                <option *ngFor="let i of schemeList" [value]="i.idScheme">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+          <!-- Boton de Carga -->
+          <div class="col-md-4 align-self-end" style="padding-bottom: 16px">
+            <button (click)="loadData()" class="btn btn-primary">
+              {{ "VACCINECOUNTRY.LOAD" | translate }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Tabla de Vacunas -->
+  <hr />
+  <div class="row">
+    <div *ngIf="canReview" class="col">
+      <table class="table table-striped table-bordered table-hover table-sm">
+        <!-- Encabezados -->
+        <thead class="thead-dark">
+          <tr>
+            <th style="background-color: slateblue"><small>{{ "VACCINECOUNTRY.REQ" | translate }}.</small></th>
+            <th style="background-color: slateblue"><small>{{ "VACCINECOUNTRY.VACCINE" | translate }}</small></th>
+            <th><small>{{ "VACCINECOUNTRY.1D" | translate }}</small></th>
+            <th><small>{{ "VACCINECOUNTRY.2D" | translate }}</small></th>
+            <th><small>{{ "VACCINECOUNTRY.3D" | translate }}</small></th>
+            <th style="background-color: coral"><small>{{ "VACCINECOUNTRY.1B" | translate }}</small></th>
+            <th style="background-color: coral"><small>{{ "VACCINECOUNTRY.2B" | translate }}</small></th>
+            <th style="background-color: coral"><small>{{ "VACCINECOUNTRY.3B" | translate }}</small></th>
+          </tr>
+        </thead>
+        <!-- Celdas -->
+        <tbody>
+          <!-- Generacion de filas -->
+          <tr *ngFor="let i of vaccineList">
+            <!-- Nombre Vacuna -->
+            <td>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  (click)="addVaccine(i.idVaccine)"
+                  [checked]="markVaccineCheck(i.idVaccine)"
+                  type="checkbox"
+                />
+              </div>
+            </td>
+            <td>
+              <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+              <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+              <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+              <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+            </td>
+            <!-- Dosis 1 -->
+            <td>
+              <tr *ngIf="listMode">
+                <div class="form-check">
+                  <input
+                    (click)="addInfo(i.idVaccine, 0)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    [checked]="markCheck(i.idVaccine, 0)"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label class="form-check-label" for="">
+                    <small>{{ "VACCINECOUNTRY.REQUIRED" | translate }}</small>
+                  </label>
+                </div>
+              </tr>
+              <tr *ngIf="listMode">
+                <div class="form-group">
+                  <input
+                    [value]="newValue(i.idVaccine, 1)"
+                    (change)="addInfoText(i.idVaccine, 1, $event)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    type="number"
+                    class="form-control form-control-sm"
+                    placeholder="# Meses"
+                  />
+                </div>
+              </tr>
+            </td>
+            <!-- Dosis 2 -->
+            <td>
+              <tr *ngIf="listMode">
+                <div class="form-check">
+                  <input
+                    (click)="addInfo(i.idVaccine, 2)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    [checked]="markCheck(i.idVaccine, 2)"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label class="form-check-label" for="">
+                    <small>{{ "VACCINECOUNTRY.REQUIRED" | translate }}</small>
+                  </label>
+                </div>
+              </tr>
+              <tr  *ngIf="listMode">
+                <div class="form-group">
+                  <input
+                    [value]="newValue(i.idVaccine, 3)"
+                    (change)="addInfoText(i.idVaccine, 3, $event)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    type="number"
+                    class="form-control form-control-sm"
+                    placeholder="# Meses"
+                  />
+                </div>
+              </tr>
+            </td>
+            <!-- Dosis 3 -->
+            <td>
+              <tr  *ngIf="listMode">
+                <div class="form-check">
+                  <input
+                    (click)="addInfo(i.idVaccine, 4)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    [checked]="markCheck(i.idVaccine, 4)"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label class="form-check-label" for="">
+                    <small>{{ "VACCINECOUNTRY.REQUIRED" | translate }}</small>
+                  </label>
+                </div>
+              </tr>
+              <tr  *ngIf="listMode">
+                <div class="form-group">
+                  <input
+                    [value]="newValue(i.idVaccine, 5)"
+                    (change)="addInfoText(i.idVaccine, 5, $event)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    type="number"
+                    class="form-control form-control-sm"
+                    placeholder="# Meses"
+                  />
+                </div>
+              </tr>
+            </td>
+            <!-- Booster 1 -->
+            <td>
+              <tr  *ngIf="listMode">
+                <div class="form-check">
+                  <input
+                    (click)="addInfo(i.idVaccine, 6)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    [checked]="markCheck(i.idVaccine, 6)"
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                    id=""
+                  />
+                  <label class="form-check-label" for="">
+                    <small>{{ "VACCINECOUNTRY.REQUIRED" | translate }}</small>
+                  </label>
+                </div>
+              </tr>
+              <tr  *ngIf="listMode">
+                <div class="form-group">
+                  <input
+                    [value]="newValue(i.idVaccine, 7)"
+                    (change)="addInfoText(i.idVaccine, 7, $event)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    type="number"
+                    class="form-control form-control-sm"
+                    placeholder="# Meses"
+                  />
+                </div>
+              </tr>
+            </td>
+            <!-- Booster 2 -->
+            <td>
+              <tr  *ngIf="listMode">
+                <div class="form-check">
+                  <input
+                    (click)="addInfo(i.idVaccine, 8)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    [checked]="markCheck(i.idVaccine, 8)"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label class="form-check-label" for="">
+                    <small>{{ "VACCINECOUNTRY.REQUIRED" | translate }}</small>
+                  </label>
+                </div>
+              </tr>
+              <tr  *ngIf="listMode">
+                <div class="form-group">
+                  <input
+                    [value]="newValue(i.idVaccine, 9)"
+                    (change)="addInfoText(i.idVaccine, 9, $event)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    type="number"
+                    class="form-control form-control-sm"
+                    placeholder="# Meses"
+                  />
+                </div>
+              </tr>
+            </td>
+            <!-- Booster 3 -->
+            <td>
+              <tr  *ngIf="listMode">
+                <div class="form-check">
+                  <input
+                    (click)="addInfo(i.idVaccine, 10)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    [checked]="markCheck(i.idVaccine, 10)"
+                    class="form-check-input"
+                    type="checkbox"
+                    value=""
+                  />
+                  <label class="form-check-label" for="">
+                    <small>{{ "VACCINECOUNTRY.REQUIRED" | translate }}</small>
+                  </label>
+                </div>
+              </tr>
+              <tr  *ngIf="listMode">
+                <div class="form-group">
+                  <input
+                    [value]="newValue(i.idVaccine, 11)"
+                    (change)="addInfoText(i.idVaccine, 11, $event)"
+                    [disabled]="enableCheck(i.idVaccine) ? false : true"
+                    type="number"
+                    class="form-control form-control-sm"
+                    placeholder="# Meses"
+                  />
+                </div>
+              </tr>
+            </td>
+            <!-- Fin de la generacion de tabla -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr />
+  <div *ngIf="canUpdate" class="row justify-content-center">
+    <div class="col-md-2">
+      <button (click)="saveData()" class="btn btn-success">{{ "VACCINECOUNTRY.SAVE" | translate }}</button>
+    </div>
+  </div>
+</div>

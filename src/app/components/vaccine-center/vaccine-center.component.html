@@ -1,0 +1,265 @@
+<div class="container">
+  <!--Titulo-->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 45%">
+    <h4>{{ "VCENTER.MANAGEMENTS" | translate }}</h4>
+  </div>
+
+  <!--Contenido-->
+  <div class="row">
+    <!-- Tabla de Centros de Salud-->
+    <div *ngIf="canCreate" class="col-md-3">
+      <form>
+        <!-- Listado de Paises -->
+        <div class="form-group input-group-sm">
+          <label for="pais">{{ "VCENTER.SELECTCOUNTRY" | translate }}</label>
+          <select
+            [(ngModel)]="idCountry"
+            (ngModelChange)="onChangeCountry($event)"
+            class="form-control"
+            name="ctry"
+            id="ctry"
+          >
+            <option
+              *ngFor="let country of countryList"
+              [value]="country.idCountry"
+            >
+              <span *ngIf="lang == 'es'">{{ country.name_ES }}</span>
+              <span *ngIf="lang == 'en'">{{ country.name_EN }}</span>
+              <span *ngIf="lang == 'pt'">{{ country.name_PT }}</span>
+              <span *ngIf="lang == 'fr'">{{ country.name_FR }}</span>
+            </option>
+          </select>
+        </div>
+        <!-- Listado de Centros de Salud -->
+        <div class="form-group input-group-sm">
+          <label for="idVaccine_Center">{{ "VCENTER.SELECTHCENTER" | translate }}</label>
+          <select
+            [(ngModel)]="idVaccine_Center"
+            (ngModelChange)="onChangeHealthCenter($event)"
+            class="form-control"
+            name="idVaccine_Center"
+            id="idVaccine_Center"
+          >
+            <option
+              *ngFor="let hCenter of healthCenterList"
+              [value]="hCenter.idVaccine_Center"
+            >
+              <span *ngIf="lang == 'es'">{{ hCenter.name_ES }}</span>
+              <span *ngIf="lang == 'en'">{{ hCenter.name_EN }}</span>
+              <span *ngIf="lang == 'pt'">{{ hCenter.name_PT }}</span>
+              <span *ngIf="lang == 'fr'">{{ hCenter.name_FR }}</span>
+            </option>
+          </select>
+        </div>
+        <!-- Listado de Vacunas -->
+        <div class="form-group input-group-sm">
+          <label for="idVaccine">{{ "VCENTER.SELECTVACCINE" | translate }}</label>
+          <select
+            [(ngModel)]="idVaccine"
+            class="form-control"
+            name="idVaccine"
+            id="idVaccine"
+          >
+            <option
+              *ngFor="let vaccine of vaccineList"
+              [value]="vaccine.idVaccine"
+            >
+              <span *ngIf="lang == 'es'">{{ vaccine.name_ES }}</span>
+              <span *ngIf="lang == 'en'">{{ vaccine.name_EN }}</span>
+              <span *ngIf="lang == 'pt'">{{ vaccine.name_PT }}</span>
+              <span *ngIf="lang == 'fr'">{{ vaccine.name_FR }}</span>
+            </option>
+          </select>
+        </div>
+        <!-- <div class="form-group input-group-sm">
+          <label for="inStock">{{ "VCENTER.STOCKS" | translate }}</label>
+          <input
+            [(ngModel)]="inStock"
+            class="form-control"
+            type="number"
+            name="inStock"
+            id="inStock"
+          />
+        </div> -->
+        <div class="form-group input-group-sm">
+          <label for="available"> {{"VCENTER.VACCINE_AVAILABLE" | translate}}</label>
+          <div class="custom-control custom-switch">
+            <input [(ngModel)]="available" type="checkbox" class="form-control custom-control-input" id="available" name="available">
+            <label class="custom-control-label" for="available">{{ available ? ("COMMON.YES" | translate) : ("COMMON.NO" | translate) }}</label>
+          </div>
+        </div>
+        <hr />
+        <!-- Boton para agregar -->
+        <div class="form-group">
+          <button
+            (click)="onSave()"
+            type="button"
+            class="btn btn-success btn-sm"
+          >
+            {{ "VCENTER.ADD" | translate }}
+            <i-bs name="plusCircle"></i-bs>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tabla de Vacunas por Centros de Salud -->
+    <div class="col-md-9">
+      <div style="overflow-y: auto; max-height: 500px; margin-bottom: 15px">
+        <table class="table table-striped table-hover table-sm">
+          <thead class="thead-dark">
+            <th>{{ "VCENTER.AVAILABLE" | translate }}</th>
+            <th>{{ "VCENTER.VACCINE" | translate }}</th>
+            <th>{{ "VCENTER.ACTIONS" | translate }}</th>
+          </thead>
+          <tbody>
+            <!-- Genera lista de Centros de Salud -->
+            <tr *ngFor="let i of vaccineCenterList">
+              <td> {{ i.available ? ("COMMON.YES" | translate) : ("COMMON.NO" | translate) }} </td>
+              <td>
+                <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+              </td>
+              <td>
+                <button
+                  *ngIf="canUpdate"
+                  (click)="setId(i.idVaccine)"
+                  type="button"
+                  class="btn btn-info btn-sm"
+                  data-toggle="modal"
+                  data-target="#modalConfig"
+                >
+                  <i-bs name="pencil"></i-bs>
+                </button>
+                <button
+                  *ngIf="canDelete"
+                  (click)="onDelete(i.idVaccine)"
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                >
+                  <i-bs name="trash"></i-bs>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal para actualizar Vacuna en Centro de Salud -->
+<div
+  class="modal fade"
+  id="modalConfig"
+  tabindex="-1"
+  aria-labelledby="datosNuevos"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "VCENTER.VCUPDATE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+
+              <div class="form-group input-group-sm">
+                <label for="modalIdVaccineCenter">{{ "VCENTER.SELECTHCENTER" | translate }}</label>
+                <select
+                  [(ngModel)]="modalIdVaccineCenter"
+                  class="form-control"
+                  name="modalIdVaccineCenter"
+                  id="modalIdVaccineCenter"
+                  disabled
+                >
+                <option
+                  *ngFor="let hCenter of healthCenterList"
+                  [value]="hCenter.idVaccine_Center"
+                >
+                  <span *ngIf="lang == 'es'">{{ hCenter.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ hCenter.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ hCenter.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ hCenter.name_FR }}</span>
+                </option>
+                </select>
+              </div>
+
+              <div class="form-group input-group-sm">
+                <label for="modalIdVaccine">{{ "VCENTER.SELECTVACCINE" | translate }}</label>
+                <select
+                  [(ngModel)]="modalIdVaccine"
+                  class="form-control"
+                  name="modalIdVaccine"
+                  id="modalIdVaccine"
+                  disabled
+                >
+                <option
+                  *ngFor="let vaccine of vaccineList"
+                  [value]="vaccine.idVaccine"
+                >
+                  <span *ngIf="lang == 'es'">{{ vaccine.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ vaccine.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ vaccine.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ vaccine.name_FR }}</span>
+                </option>
+                </select>
+              </div>
+              <hr />
+
+              <!-- Stock -->
+              <!-- <div class="form-group input-group-sm">
+                <label for="modalInStock">{{ "VCENTER.STOCKS" | translate }}</label>
+                <input
+                  [(ngModel)]="modalInStock"
+                  class="form-control"
+                  type="number"
+                  name="modalInStock"
+                  id="modalInStock"
+                />
+              </div> -->
+              <div class="form-group input-group-sm">
+                <div class="custom-control custom-switch">
+                  <input [(ngModel)]="modalAvailable" type="checkbox" class="form-control custom-control-input" id="modalAvailable" name="modalAvailable">
+                  <label class="custom-control-label" for="modalAvailable">{{"VCENTER.VACCINE_AVAILABLE" | translate}}</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VCENTER.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="onUpdate()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{ "VCENTER.SAVE" | translate }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

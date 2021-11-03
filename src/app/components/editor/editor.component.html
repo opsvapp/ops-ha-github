@@ -1,0 +1,245 @@
+<div class="container" style="margin-top: 25px">
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 33%">
+    <h4>{{ "EDITOR.NEWSEDITOR" | translate }}</h4>
+  </div>
+  <div class="row">
+    <div class="col-md-6" style="border-right: dotted 2px silver">
+      <!-- EN -->
+      <form>
+        <div class="form-group">
+          <h6>
+            {{ "EDITOR.NEWSTITLE" | translate }}
+            <span class="badge badge-primary">{{ "EDITOR.ENGLISH" | translate }}</span>
+          </h6>
+          <div style="display: grid;">
+            <input
+            [(ngModel)]="title_EN"
+            class="form-control"
+            type="text"
+            name="tituloEN"
+            id="tituloEN"
+            maxlength="100"
+            style="padding: .375rem 1.75rem 0.375rem 0.75rem;"
+            />
+            <code class="text-primary" style="top: 37px;right: 21px;">{{ 100 - title_EN.length }}</code>
+          </div>
+        </div>
+      </form>
+      <h6>{{ "EDITOR.CONTENT" | translate }}</h6>
+      <angular-editor
+        id="editorEN"
+        [(ngModel)]="htmlContentEN"
+        [config]="editorConfig"
+      ></angular-editor>
+      <!-- FR -->
+      <form style="margin-top: 15px; border-top: dotted 2px silver">
+        <div class="form-group" style="padding-top: 10px">
+          <h6>
+            {{ "EDITOR.NEWSTITLE" | translate }}
+            <span class="badge badge-secondary">{{ "EDITOR.FRENCH" | translate }}</span>
+          </h6>
+          <div style="display: grid;">
+            <input
+              [(ngModel)]="title_FR"
+              class="form-control"
+              type="text"
+              name="tituloFR"
+              id="tituloFR"
+              maxlength="100"
+              style="padding: .375rem 1.75rem 0.375rem 0.75rem;"
+            />
+            <code class="text-secondary" style="top: 353px;right: 21px;">{{ 100 - title_FR.length }}</code>
+          </div>
+        </div>
+      </form>
+      <h6>{{ "EDITOR.CONTENT" | translate }}</h6>
+      <angular-editor
+        id="editorFR"
+        [(ngModel)]="htmlContentFR"
+        [config]="editorConfig"
+      ></angular-editor>
+    </div>
+
+    <div class="col-md-6">
+      <!-- ES -->
+      <form>
+        <div class="form-group">
+          <h6>
+            {{ "EDITOR.NEWSTITLE" | translate }}
+            <span class="badge badge-danger">{{ "EDITOR.SPANISH" | translate }}</span>
+          </h6>
+          <div style="display: grid;">
+            <input
+              [(ngModel)]="title_ES"
+              class="form-control"
+              type="text"
+              name="tituloES"
+              id="tituloES"
+              maxlength="100"
+              style="padding: .375rem 1.75rem 0.375rem 0.75rem;"
+            />
+            <code class="text-danger" style="top: 37px;right: 21px;">{{ 100 - title_ES.length }}</code>
+          </div>
+        </div>
+      </form>
+      <h6>{{ "EDITOR.CONTENT" | translate }}</h6>
+      <angular-editor
+        id="editorES"
+        [(ngModel)]="htmlContentES"
+        [config]="editorConfig"
+      ></angular-editor>
+      <!-- PT -->
+      <form style="margin-top: 15px; border-top: dotted 2px silver">
+        <div class="form-group" style="padding-top: 10px">
+          <h6>
+            {{ "EDITOR.NEWSTITLE" | translate }}
+            <span class="badge badge-warning">{{ "EDITOR.PORTUGUESE" | translate }}</span>
+          </h6>
+          <div style="display: grid;">
+            <input
+              [(ngModel)]="title_PT"
+              class="form-control"
+              type="text"
+              name="tituloPT"
+              id="tituloPT"
+              maxlength="100"
+              style="padding: .375rem 1.75rem 0.375rem 0.75rem;"
+            />
+            <code class="text-warning" style="top: 353px;right: 21px;">{{ 100 - title_PT.length }}</code>
+          </div>
+        </div>
+      </form>
+      <h6>{{ "EDITOR.CONTENT" | translate }}</h6>
+      <angular-editor
+        id="editorPT"
+        [(ngModel)]="htmlContentPT"
+        [config]="editorConfig"
+      ></angular-editor>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- INFO -->
+      <form style="margin-top: 15px">
+        <div
+          class="form-row separador"
+          style="margin-bottom: 10px; margin-top: 10px"
+        >
+          <h6 style="color: white">{{ "EDITOR.ADITIONALINFO" | translate }}</h6>
+        </div>
+
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="newsDate">
+                <b> {{ "EDITOR.NEWSDATE" | translate }} </b>
+              </label>
+              <input
+                [(ngModel)]="newsDate"
+                class="form-control"
+                type="date"
+                name="newsDate"
+                id="newsDate"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="newsStart">
+                <b> {{ "EDITOR.STARTVALIDTIME" | translate }} </b>
+              </label>
+              <input
+                [(ngModel)]="newsStartingDate"
+                class="form-control"
+                type="date"
+                name="newsStart"
+                id="newsStart"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="newsEnd">
+                <b> {{ "EDITOR.ENDVALIDTIME" | translate }} </b>
+              </label>
+              <input
+                [(ngModel)]="newsEndDate"
+                class="form-control"
+                type="date"
+                name="newsEnd"
+                id="newsEnd"
+                [min]="newsStartingDate"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="originalURL">
+                <b> {{ "EDITOR.ORIGINALURL" | translate }} </b>
+              </label>
+              <input
+                [(ngModel)]="newsURL"
+                class="form-control"
+                type="url"
+                name="originalURL"
+                id="originalURL"
+              />
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="author">
+                <b> {{ "EDITOR.AUTHOR" | translate }} </b>
+              </label>
+              <input
+                [(ngModel)]="author"
+                class="form-control"
+                type="url"
+                name="author"
+                id="author"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <div class="form-group">
+              <label for="newsImage">
+                <b> {{ "EDITOR.NEWSIMAGE" | translate }} </b>
+              </label>
+              <br />
+              <input
+                type="file"
+                name="newsImage"
+                id="newsImage"
+                (change)="handleFileInput($event)"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-row justify-content-center" style="margin-top: 15px">
+          <div class="col">
+            <div class="form-group">
+              <button
+                *ngIf="updateMode === false"
+                (click)="saveNews()"
+                class="btn btn-success"
+              >
+                {{ "EDITOR.SAVENEW" | translate }} <i-bs name="plus-circle"></i-bs>
+              </button>
+              <button
+                *ngIf="updateMode === true"
+                (click)="updateNews()"
+                class="btn btn-primary"
+              >
+                {{ "EDITOR.UPDATENEW" | translate }} <i-bs name="pencil"></i-bs>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

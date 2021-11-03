@@ -1,0 +1,878 @@
+<div class="container">
+  <!-- Titulo -->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 45%">
+    <h4>{{ "VPOINT.MANAGEMENTS" | translate }}</h4>
+  </div>
+  <!-- Contenido -->
+  <div class="row">
+    <div class="col">
+      <!-- Botones -->
+      <div class="btn-group" role="group" style="margin-bottom: 15px">
+        <button
+          *ngIf="canReview"
+          class="btn btn-secondary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#pointTable"
+        >
+          {{ "VPOINT.VPOINT" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <button
+          *ngIf="canCreate"
+          class="btn btn-primary"
+          type="button"
+          data-toggle="collapse"
+          data-target="#pointForm"
+        >
+          {{ "VPOINT.ADDVPOINT" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <button
+          *ngIf="canReview"
+          class="btn btn-info"
+          type="button"
+          data-toggle="collapse"
+          data-target="#pointStock"
+        >
+          {{ "VPOINT.VPOINTSTOCK" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+        <button
+          *ngIf="canCreate"
+          class="btn btn-success"
+          type="button"
+          data-toggle="collapse"
+          data-target="#pointVaccineForm"
+        >
+          {{ "VPOINT.ADDVPOINTSTOCK" | translate }}
+          <i-bs name="chevron-bar-down"></i-bs>
+        </button>
+      </div>
+      <!-- Tabla -->
+      <div
+        class="collapse"
+        id="pointTable"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <!-- Formulario de Busqueda -->
+        <h5 class="subtitulo">{{ "VPOINT.VPOINT" | translate }}</h5>
+        <form style="margin-bottom: 15px">
+          <!-- Listados -->
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="#country">{{ "VPOINT.COUNTRY" | translate }}</label>
+              <select
+                [(ngModel)]="countryId"
+                (ngModelChange)="onCountryChange()"
+                class="form-control"
+                name="country"
+                id="country"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#adminOne">{{ "VPOINT.ADMIN1" | translate }}</label>
+              <select
+                [(ngModel)]="adminOneId"
+                (ngModelChange)="onAdminOneChange()"
+                class="form-control"
+                name="adminOne"
+                id="adminOne"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of adminOneList" [value]="i.idAdmin_1">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#adminTwo">{{ "VPOINT.ADMIN2" | translate }}</label>
+              <select
+                [(ngModel)]="adminTwoId"
+                (ngModelChange)="onAdminTwoChange()"
+                class="form-control"
+                name="adminTwo"
+                id="adminTwo"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of adminTwoList" [value]="i.idAdmin_2">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+          <!-- Campos -->
+          <hr />
+        </form>
+        <!-- Tabla de Puntos de Vacunación -->
+        <div class="row">
+          <div class="col" style="overflow-y: auto; max-height: 500px">
+            <table class="table table-striped table-hover table-sm">
+              <thead class="thead-dark">
+                <th>{{ "VPOINT.NAME" | translate }}</th>
+                <th>{{ "VPOINT.ADDRESS" | translate }}</th>
+                <th>{{ "VPOINT.SCHEDULE" | translate }}</th>
+                <th>{{ "VPOINT.PHONE" | translate }}</th>
+                <th class="tdCentro">{{ "VPOINT.ACTIONS" | translate }}</th>
+              </thead>
+              <tbody>
+                <!-- Genera lista de paises -->
+                <tr *ngFor="let i of vaccinationPointList">
+                  <td>
+                    <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                    <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                    <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                    <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                  </td>
+                  <td>{{ i.address }}</td>
+                  <td>{{ i.schedule }}</td>
+                  <td>{{ i.phone }}</td>
+                  <td class="tdCentro">
+                    <button
+                      *ngIf="canUpdate"
+                      (click)="setIdVaccination(i.idVaccination_Point)"
+                      type="button"
+                      class="btn btn-info btn-sm"
+                      data-toggle="modal"
+                      data-target="#modalConfig"
+                    >
+                      <i-bs name="pencil"></i-bs>
+                    </button>
+                    <button 
+                      *ngIf="canDelete"
+                      (click)="onDelete(i.idVaccination_Point)"
+                      type="button" 
+                      class="btn btn-danger btn-sm">
+                      <i-bs name="trash"></i-bs>
+                    </button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div
+        class="collapse"
+        id="pointForm"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <h5 class="subtitulo">{{ "VPOINT.ADDVPOINT" | translate }}</h5>
+        <form style="margin-bottom: 15px">
+          <!-- Listados -->
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="#country">{{ "VPOINT.COUNTRY" | translate }}</label>
+              <select
+                [(ngModel)]="countryId"
+                (ngModelChange)="onCountryChange()"
+                class="form-control"
+                name="country"
+                id="country"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#adminOne">{{ "VPOINT.ADMIN1" | translate }}</label>
+              <select
+                [(ngModel)]="adminOneId"
+                (ngModelChange)="onAdminOneChange()"
+                class="form-control"
+                name="adminOne"
+                id="adminOne"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of adminOneList" [value]="i.idAdmin_1">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#adminTwo">{{ "VPOINT.ADMIN2" | translate }}</label>
+              <select
+                [(ngModel)]="adminTwoId"
+                (ngModelChange)="onAdminTwoChange()"
+                class="form-control"
+                name="adminTwo"
+                id="adminTwo"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of adminTwoList" [value]="i.idAdmin_2">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+          <!-- Campos de Name -->
+          <hr />
+          <div class="form-row">
+            <div class="col-md-3">
+              <!--Ingles-->
+              <div class="form-group input-group-sm">
+                <label for="name_EN"
+                  >{{ "VPOINT.NAME" | translate }}
+                  <span class="badge badge-primary">{{ "VPOINT.ENGLISH" | translate }}</span>
+                </label>
+                <input
+                  [(ngModel)]="nameEN"
+                  class="form-control"
+                  type="text"
+                  name="name_EN"
+                  id="name_EN"
+                />
+              </div>
+            </div>
+            <!--Español-->
+            <div class="col-md-3">
+              <div class="form-group input-group-sm">
+                <label for="name_ES"
+                  >{{ "VPOINT.NAME" | translate }}
+                  <span class="badge badge-danger">{{ "VPOINT.SPANISH" | translate }}</span>
+                </label>
+                <input
+                  [(ngModel)]="nameES"
+                  class="form-control"
+                  type="text"
+                  name="name_ES"
+                  id="name_ES"
+                />
+              </div>
+            </div>
+            <!--Portugues-->
+            <div class="col-md-3">
+              <div class="form-group input-group-sm">
+                <label for="name_PT"
+                  >{{ "VPOINT.NAME" | translate }}
+                  <span class="badge badge-warning">{{ "VPOINT.PORTUGUESE" | translate }}</span>
+                </label>
+                <input
+                  [(ngModel)]="namePT"
+                  class="form-control"
+                  type="text"
+                  name="name_PT"
+                  id="name_PT"
+                />
+              </div>
+            </div>
+            <!--Frances-->
+            <div class="col-md-3">
+              <div class="form-group input-group-sm">
+                <label for="name_FR"
+                  >{{ "VPOINT.NAME" | translate }}
+                  <span class="badge badge-secondary">{{ "VPOINT.FRENCH" | translate }}</span>
+                </label>
+                <input
+                  [(ngModel)]="nameFR"
+                  class="form-control"
+                  type="text"
+                  name="name_FR"
+                  id="name_FR"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- Datos -->
+          <hr />
+          <div class="form-row">
+            <div class="col-md-3">
+              <div class="form-group input-group-sm">
+                <label for="address">{{ "VPOINT.ADDRESS" | translate }}</label>
+                <input
+                  [(ngModel)]="address"
+                  class="form-control"
+                  type="text"
+                  name="address"
+                  id="address"
+                  rows="2"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group input-group-sm">
+                <label for="phone">{{ "VPOINT.PHONE" | translate }}</label>
+                <input
+                  [(ngModel)]="phone"
+                  class="form-control"
+                  type="text"
+                  name="phone"
+                  id="phone"
+                />
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group input-group-sm">
+                <label for="schedule">{{ "VPOINT.SCHEDULE" | translate }}</label>
+                <input
+                  [(ngModel)]="schedule"
+                  class="form-control"
+                  type="text"
+                  name="schedule"
+                  id="schedule"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- Boton -->
+          <div class="form-row">
+            <div class="col-md-3">
+              <button
+                (click)="onSave()"
+                type="button"
+                class="btn btn-success btn-sm">
+                {{ "VPOINT.SAVEVPOINT" | translate }} <i-bs name="plus-circle"></i-bs>
+              </button>
+            </div>
+          </div>
+          <!-- Fin del Form -->
+        </form>
+      </div>
+
+      <div
+        class="collapse"
+        id="pointStock"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <h5 class="subtitulo">{{ "VPOINT.VPOINTSTOCK" | translate }}</h5>
+        <form style="margin-bottom: 15px">
+          <!-- Listados -->
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="#country">{{ "VPOINT.COUNTRY" | translate }}</label>
+              <select
+                [(ngModel)]="countryId"
+                (ngModelChange)="onCountryChange()"
+                class="form-control"
+                name="country"
+                id="country"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#adminOne">{{ "VPOINT.ADMIN1" | translate }}</label>
+              <select
+                [(ngModel)]="adminOneId"
+                (ngModelChange)="onAdminOneChange()"
+                class="form-control"
+                name="adminOne"
+                id="adminOne"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of adminOneList" [value]="i.idAdmin_1">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#adminTwo">{{ "VPOINT.ADMIN2" | translate }}</label>
+              <select
+                [(ngModel)]="adminTwoId"
+                (ngModelChange)="onAdminTwoChange()"
+                class="form-control"
+                name="adminTwo"
+                id="adminTwo"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of adminTwoList" [value]="i.idAdmin_2">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#vaccinationPoint">{{ "VPOINT.VPOINT" | translate }}</label>
+              <select
+                [(ngModel)]="vaccinationPoint"
+                (ngModelChange)="onVaccinationPointChange()"
+                class="form-control"
+                name="vaccinationPoint"
+                id="vaccinationPoint"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option
+                  *ngFor="let i of vaccinationPointList"
+                  [value]="i.idVaccination_Point"
+                >
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+        </form>
+        <!-- Tabla de vacunas -->
+        <hr />
+        <div class="row">
+          <div class="col-md-6" style="overflow-y: auto; max-height: 500px">
+            <table class="table table-striped table-hover table-sm">
+              <thead class="thead-dark">
+                <th>{{ "VPOINT.VACCINES" | translate }} </th>
+                <th>{{ "VPOINT.AVAILABLE" | translate }} </th>
+                <th class="tdCentro">{{ "VPOINT.ACTIONS" | translate }} </th>
+              </thead>
+              <tbody>
+                <!-- Genera lista de paises -->
+                <tr *ngFor="let i of vaccinePointList ">
+                  <td> 
+                    <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                    <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                    <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                    <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                  </td>
+                  <td> {{ i.available ? ("COMMON.YES" | translate) : ("COMMON.NO" | translate) }} </td>
+                  <td class="tdCentro">
+                    <button
+                      *ngIf="canUpdate"
+                      (click)="setIdVaccine(i.idVaccine)"
+                      type="button"
+                      class="btn btn-info btn-sm"
+                      data-toggle="modal"
+                      data-target="#modalConfig2"
+                    >
+                      <i-bs name="pencil"></i-bs>
+                    </button>
+                    <button 
+                      *ngIf="canDelete"
+                      (click)="onDeleteVaccine(i.idVaccine)"
+                      type="button" 
+                      class="btn btn-danger btn-sm">
+                      <i-bs name="trash"></i-bs>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Fin del Collapse de stock -->
+      </div>
+
+      <!-- Formulario -->
+      <div
+        class="collapse"
+        id="pointVaccineForm"
+        style="border-left: solid 2px coral; padding-left: 10px"
+      >
+        <h5 class="subtitulo">{{ "VPOINT.ADDVPOINTSTOCK" | translate }} </h5>
+        <form style="margin-bottom: 15px">
+          <!-- Listados -->
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="#country">{{ "VPOINT.COUNTRY" | translate }}</label>
+              <select
+                [(ngModel)]="countryId"
+                (ngModelChange)="onCountryChange()"
+                class="form-control"
+                name="country"
+                id="country"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of countryList" [value]="i.idCountry">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#adminOne">{{ "VPOINT.ADMIN1" | translate }}</label>
+              <select
+                [(ngModel)]="adminOneId"
+                (ngModelChange)="onAdminOneChange()"
+                class="form-control"
+                name="adminOne"
+                id="adminOne"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of adminOneList" [value]="i.idAdmin_1">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#adminTwo">{{ "VPOINT.ADMIN2" | translate }}</label>
+              <select
+                [(ngModel)]="adminTwoId"
+                (ngModelChange)="onAdminTwoChange()"
+                class="form-control"
+                name="adminTwo"
+                id="adminTwo"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option *ngFor="let i of adminTwoList" [value]="i.idAdmin_2">
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="#vaccinationPoint">{{ "VPOINT.VPOINT" | translate }}</label>
+              <select
+                [(ngModel)]="vaccinationPoint"
+                (ngModelChange)="onVaccinationPointChange()"
+                class="form-control"
+                name="vaccinationPoint"
+                id="vaccinationPoint"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option
+                  *ngFor="let i of vaccinationPointList"
+                  [value]="i.idVaccination_Point"
+                >
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+          </div>
+          <!-- Campos -->
+          <hr />
+          <div class="form-row">
+            <!-- Listado de Vacunas -->
+            <div class="col-md-3">
+              <label for="vaccineId">{{ "VPOINT.VACCINE" | translate }}</label>
+              <select
+                [(ngModel)]="vaccineId"
+                class="form-control"
+                name="vaccineId"
+                id="vaccineId"
+              >
+                <option [value]="-1" selected>-- {{ "VPOINT.SELECT" | translate }} --</option>
+                <option
+                  *ngFor="let i of vaccineList"
+                  [value]="i.idVaccine"
+                >
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+              </select>
+            </div>
+            <!-- <div class="col-md-3">
+              <label for="inStock"> {{ "VPOINT.STOCK" | translate }}</label>
+              <input
+                [(ngModel)]="inStock"
+                class="form-control"
+                type="number"
+                name="inStock"
+                id="inStock"
+              />
+            </div> -->
+            <div class="d-grid col-md-3">
+              <label for="available"> {{"VPOINT.VACCINE_AVAILABLE" | translate}}</label>
+              <div class="custom-control custom-switch">
+                <input [(ngModel)]="available" type="checkbox" class="form-control custom-control-input" id="available" name="available">
+                <label class="custom-control-label" for="available">{{ available ? ("COMMON.YES" | translate) : ("COMMON.NO" | translate) }}</label>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <!-- Boton -->
+          <div class="form-row">
+            <div class="col-md-3">
+              <button
+                (click)="onSaveVaccine()"
+                type="button"
+                class="btn btn-success btn-sm">
+                {{ "VPOINT.VACCINEADD" | translate }}<i-bs name="plus-circle"></i-bs>
+              </button>
+            </div>
+          </div>
+          <!-- Fin del Form -->
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal para actualizar Centro de Salud -->
+<div
+  class="modal fade"
+  id="modalConfig"
+  tabindex="-1"
+  aria-labelledby="datosNuevos"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "VPOINT.UPDATEVPOINT" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+              <!-- English -->
+              <div class="form-group input-group-sm">
+                <label for="modalName_ES"
+                >{{ "VPOINT.NAME" | translate }}
+                <span class="badge badge-primary">{{ "VPOINT.ENGLISH" | translate }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalName_EN"
+                  class="form-control"
+                  type="text"
+                  name="modalName_EN"
+                  id="modalName_EN"
+                />
+              </div>
+              <!-- Español -->
+              <div class="form-group input-group-sm">
+                <label for="modalName_ES"
+                  >{{ "VPOINT.NAME" | translate }}
+                  <span class="badge badge-danger">{{ "VPOINT.SPANISH" | translate }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalName_ES"
+                  class="form-control"
+                  type="text"
+                  id="modalName_ES"
+                  name="modalName_ES"
+                />
+              </div>
+              <!-- Portugues -->
+              <div class="form-group input-group-sm">
+                <label for="modalName_PT"
+                  >{{ "VPOINT.NAME" | translate }}
+                  <span class="badge badge-warning">{{ "VPOINT.PORTUGUESE" | translate }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalName_PT"
+                  class="form-control"
+                  type="text"
+                  id="modalName_PT"
+                  name="modalName_PT"
+                />
+              </div>
+              <!-- French -->
+              <div class="form-group input-group-sm">
+                <label for="modalName_FR"
+                  >{{ "VPOINT.NAME" | translate }}
+                  <span class="badge badge-secondary">{{ "VPOINT.FRENCH" | translate }}</span>
+                </label>
+                <input
+                  [(ngModel)]="modalName_FR"
+                  class="form-control"
+                  type="text"
+                  id="modalName_FR"
+                  name="modalName_FR"
+                />
+              </div>
+              <!-- Address -->
+              <div class="form-group input-group-sm">
+                <label for="modalAddress">{{ "VPOINT.ADDRESS" | translate }}</label>
+                <textarea
+                  [(ngModel)]="modalAddress"
+                  class="form-control"
+                  type="text"
+                  name="modalAddress"
+                  id="modalAddress"
+                  rows="2"
+                >
+                </textarea>
+              </div>
+
+              <!-- Schedule -->
+              <div class="form-group input-group-sm">
+                <label for="modalSchedule">{{ "VPOINT.SCHEDULE" | translate }}</label>
+                <input
+                  [(ngModel)]="modalSchedule"
+                  class="form-control"
+                  type="text"
+                  name="modalSchedule"
+                  id="modalSchedule"
+                />
+              </div>
+
+              <!-- phone -->
+              <div class="form-group input-group-sm">
+                <label for="modalPhone">{{ "VPOINT.PHONE" | translate }}</label>
+                <input
+                  [(ngModel)]="modalPhone"
+                  class="form-control"
+                  type="text"
+                  name="modalPhone"
+                  id="modalPhone"
+                />
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VPOINT.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="onUpdateVaccination()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+        {{ "VPOINT.KEEP" | translate }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para actualizar Vacuna en Centro de Salud -->
+<div
+  class="modal fade"
+  id="modalConfig2"
+  tabindex="-1"
+  aria-labelledby="datosNuevos"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> {{ "VPOINT.UPDATEVACCINEVPOINT" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Aca va el form-->
+        <form>
+          <div class="form-row">
+            <!--columna Izquierda-->
+            <div class="col">
+
+              <div class="form-group input-group-sm">
+                <label for="modalIdVaccine">{{ "VPOINT.VACCINE" | translate }}</label>
+                <select
+                  [(ngModel)]="modalIdVaccine"
+                  class="form-control"
+                  name="modalIdVaccine"
+                  id="modalIdVaccine"
+                  disabled
+                >
+                <option
+                  *ngFor="let i of vaccinePointList"
+                  [value]="i.idVaccine"
+                >
+                  <span *ngIf="lang == 'es'">{{ i.name_ES }}</span>
+                  <span *ngIf="lang == 'en'">{{ i.name_EN }}</span>
+                  <span *ngIf="lang == 'pt'">{{ i.name_PT }}</span>
+                  <span *ngIf="lang == 'fr'">{{ i.name_FR }}</span>
+                </option>
+                </select>
+              </div>
+              <hr />
+
+              <!-- Stock -->
+              <!-- <div class="form-group input-group-sm">
+                <label for="modalInStock">{{ "VPOINT.STOCK" | translate }}</label>
+                <input
+                  [(ngModel)]="modalInStock"
+                  class="form-control"
+                  type="number"
+                  name="modalInStock"
+                  id="modalInStock"
+                />
+              </div> -->
+
+              <!-- available -->
+              <div class="form-group input-group-sm">
+                <div class="custom-control custom-switch">
+                  <input [(ngModel)]="modalAvailable" type="checkbox" class="form-control custom-control-input" id="modalAvailable" name="modalAvailable">
+                  <label class="custom-control-label" for="modalAvailable">{{"VPOINT.VACCINE_AVAILABLE" | translate}}</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VPOINT.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+        <button
+          (click)="onUpdateVaccine()"
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+        >
+          {{ "VPOINT.KEEP" | translate }}
+          <i-bs name="save"></i-bs>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

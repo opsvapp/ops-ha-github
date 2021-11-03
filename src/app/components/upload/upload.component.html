@@ -1,0 +1,390 @@
+<div class="container">
+  <!--Titulo-->
+  <div class="row titulo" style="margin: 25px 0px 15px 0px; width: 35%">
+    <h4>{{ "UPLOAD.TITLE" | translate }}</h4>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <form>
+        <div class="form-row">
+          <label for="category"
+            ><strong> {{ "UPLOAD.CATEGORY" | translate }} </strong></label
+          >
+          <select
+            [(ngModel)]="categoryId"
+            class="form-control"
+            name="category"
+            id="category"
+          >
+            <option [value]="0" selected>
+              -- {{ "UPLOAD.SELECT_CATEGORY" | translate }} --
+            </option>
+            <option [value]="1" selected>
+            {{ "UPLOAD.CAT_1" | translate }} 
+            </option>
+            <option [value]="2" selected>
+              {{ "UPLOAD.CAT_2" | translate }}
+            </option>
+            <option [value]="3" selected>
+              {{ "UPLOAD.CAT_3" | translate }}
+            </option>
+            <option [value]="4" selected>
+              {{ "UPLOAD.CAT_4" | translate }}
+            </option>
+            <option [value]="5" selected>
+              {{ "UPLOAD.CAT_5" | translate }}
+            </option>
+            <option [value]="6" selected>
+              {{ "UPLOAD.CAT_6" | translate }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="categoryId == catcountryId" class="form-row">
+          <label for="country"
+            ><strong> {{ "COUNTRY.COUNTRY" | translate }} </strong></label
+          >
+          <select
+            [(ngModel)]="countryId"
+            class="form-control"
+            name="country"
+            id="country"
+          >
+            <option [value]="-1" selected>
+              -- {{ "UPLOAD.SELECT" | translate }} --
+            </option>
+            
+            <option *ngFor="let item of countryList" [value]="item.idCountry">
+              <span *ngIf="lang == 'es'">{{ item.name_ES }}</span>
+              <span *ngIf="lang == 'en'">{{ item.name_EN }}</span>
+              <span *ngIf="lang == 'pt'">{{ item.name_PT }}</span>
+              <span *ngIf="lang == 'fr'">{{ item.name_FR }}</span>
+            </option>
+          </select>
+        </div>
+        <br>
+          <div [ngSwitch]="categoryId" class="form-row">
+            <button *ngSwitchCase="'1'" type="button" class="btn btn-primary" (click)="downloadFileVaccine()"> <i-bs name="download"></i-bs>&nbsp;{{ "UPLOAD.FORMAT" | translate }}</button>
+            <button *ngSwitchCase="'2'" type="button" class="btn btn-primary" (click)="downloadFileDisease()"> <i-bs name="download"></i-bs>&nbsp;{{ "UPLOAD.FORMAT" | translate }}</button>
+            <button *ngSwitchCase="'3'" type="button" class="btn btn-primary" (click)="downloadFileScheme()"> <i-bs name="download"></i-bs>&nbsp;{{ "UPLOAD.FORMAT" | translate }}</button>
+            <button *ngSwitchCase="'4'" type="button" class="btn btn-primary" (click)="downloadFileHealthCenter()"> <i-bs name="download"></i-bs>&nbsp;{{ "UPLOAD.FORMAT" | translate }}</button>
+            <button *ngSwitchCase="'5'" type="button" class="btn btn-primary" (click)="downloadFileVaccinationPoint()"> <i-bs name="download"></i-bs>&nbsp;{{ "UPLOAD.FORMAT" | translate }}</button>
+            <button *ngSwitchCase="'6'" type="button" class="btn btn-primary" (click)="downloadFileVaccinationScheme()"><i-bs name="download"></i-bs> &nbsp;{{ "UPLOAD.FORMAT" | translate }}</button>
+          </div>
+        <hr />
+        <div class="form-row">
+          <div [ngSwitch]="categoryId" class="form-group" >
+            <label *ngSwitchCase="'1'"><strong>{{ "UPLOAD.INSTRUCTION" | translate }} {{ "UPLOAD.CAT_1" | translate }}</strong></label>
+            <label *ngSwitchCase="'2'"><strong>{{ "UPLOAD.INSTRUCTION" | translate }} {{ "UPLOAD.CAT_2" | translate }}</strong></label>
+            <label *ngSwitchCase="'3'"><strong>{{ "UPLOAD.INSTRUCTION" | translate }} {{ "UPLOAD.CAT_3" | translate }}</strong></label>
+            <label *ngSwitchCase="'4'"><strong>{{ "UPLOAD.INSTRUCTION" | translate }} {{ "UPLOAD.CAT_4" | translate }}</strong></label>
+            <label *ngSwitchCase="'5'"><strong>{{ "UPLOAD.INSTRUCTION" | translate }} {{ "UPLOAD.CAT_5" | translate }}</strong></label>
+            <label *ngSwitchCase="'6'"><strong>{{ "UPLOAD.INSTRUCTION" | translate }} {{ "UPLOAD.CAT_6" | translate }}</strong></label>
+            <label *ngSwitchDefault><strong>{{ "UPLOAD.DEFAULT_INSTRUCTION" | translate }} </strong></label>
+            <button
+            type="button"
+            class="btn btn btn btn-outline btn-sm"
+            data-toggle="modal"
+            data-target="#datainfo"
+          >
+            <i-bs name="infoCircleFill"></i-bs>
+          </button>         
+           
+            <input
+              #myInput
+              (change)="handleFileInput($event)"
+              type="file"
+              class="form-control-file"
+              accept=".xlsx"
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="form-row">
+          <button (click)="upload()" class="btn btn-success">
+            {{ "UPLOAD.LOAD" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal para datos -->
+<div
+  class="modal fade"
+  id="datainfo"
+  tabindex="-1"
+  aria-labelledby="datainfo"
+  aria-hidden="true"
+>
+  <div [ngSwitch]="categoryId"class="modal-dialog">
+    <!-- Modal para vaccines -->
+    <div *ngSwitchCase="'1'" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "UPLOAD.VACCINE_INFO_TITLE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><p>{{ "UPLOAD.V_INFO" | translate }}</p></small>
+              <small><b>{{ "UPLOAD.V_INFO_2" | translate }}</b></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><p>{{ "UPLOAD.V_INFO_3" | translate }}</p></small>
+              <small><b><p>-{{ "UPLOAD.V_INFO_4" | translate }}</p></b></small>
+              <small><p>-{{ "UPLOAD.V_INFO_5" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_6" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_7" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_8" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_9" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_10" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_11" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_12" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_13" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_14" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_15" | translate }}</p></small>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col">
+            <div class="modal-body">
+              <small><p>{{ "UPLOAD.V_INFO_16" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_17" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.V_INFO_18" | translate }}</p></small>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VACCINE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal para diseases -->
+    <div *ngSwitchCase="'2'" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "UPLOAD.DISEASE_INFO_TITLE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><p>{{ "UPLOAD.D_INFO" | translate }}</p></small>
+              <small><b>{{ "UPLOAD.D_INFO_2" | translate }}</b></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><b><p>-{{ "UPLOAD.D_INFO_3" | translate }}</p></b></small>
+              <small><p>-{{ "UPLOAD.D_INFO_4" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.D_INFO_5" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.D_INFO_6" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.D_INFO_7" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.D_INFO_8" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.D_INFO_9" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.D_INFO_10" | translate }}</p></small>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VACCINE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal para schemes -->
+    <div *ngSwitchCase="'3'" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "UPLOAD.SCHEME_INFO_TITLE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><p>{{ "UPLOAD.SCHEME_INFO" | translate }}</p></small>
+              <small><b>{{ "UPLOAD.SCHEME_INFO_2" | translate }}</b></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><b><p>-{{ "UPLOAD.SCHEME_INFO_3" | translate }}</p></b></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_4" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_5" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_6" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_7" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_8" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_9" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_10" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_11" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.SCHEME_INFO_12" | translate }}</p></small>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VACCINE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+      </div>
+    </div>
+
+     <!-- Modal para Centros  de salud -->
+     <div *ngSwitchCase="'4'" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "UPLOAD.HCENTER_INFO_TITLE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><p>{{ "UPLOAD.HC_INFO" | translate }}</p></small>
+              <small><b>{{ "UPLOAD.HC_INFO_2" | translate }}</b></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><b><p>-{{ "UPLOAD.HC_INFO_3" | translate }}</p></b></small>
+              <small><p>-{{ "UPLOAD.HC_INFO_4" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.HC_INFO_5" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.HC_INFO_6" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.HC_INFO_7" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.HC_INFO_8" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.HC_INFO_9" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.HC_INFO_10" | translate }}</p></small>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VACCINE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal para puestos de salud -->
+    <div *ngSwitchCase="'5'" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "UPLOAD.VPOINT_INFO_TITLE" | translate }}</h5>
+        <br />
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><p>{{ "UPLOAD.VP_INFO" | translate }}</p></small>
+              <small><b>{{ "UPLOAD.VP_INFO_2" | translate }}</b></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="modal-body">
+              <small><b><p>-{{ "UPLOAD.VP_INFO_3" | translate }}</p></b></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_4" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_5" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_6" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_7" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_8" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_9" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_10" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_11" | translate }}</p></small>
+              <small><p>-{{ "UPLOAD.VP_INFO_12" | translate }}</p></small>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer" style="background-color: lightgray">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          {{ "VACCINE.CLOSE" | translate }}
+          <i-bs name="x-circle"></i-bs>
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+</div>
