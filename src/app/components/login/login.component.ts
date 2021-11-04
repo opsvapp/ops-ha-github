@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
           //Para permisos por pais
           localStorage.setItem('regional', String(response.data.regional));
           localStorage.setItem('idCountry', String(response.data.idCountry));
-          window.location.href = './lobby';
+          this.router.navigate(['/lobby']);
         }
       },
       (error:any) => {
