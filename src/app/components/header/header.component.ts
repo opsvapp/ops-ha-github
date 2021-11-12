@@ -99,6 +99,10 @@ export class HeaderComponent implements OnInit {
    * Permission for UploadFiles
    */
   canUploadFiles = false;
+  /**
+   * Permission for UploadFiles
+   */
+  canLibrary = true;
 
   /**
     * Language used in the app
@@ -133,6 +137,7 @@ export class HeaderComponent implements OnInit {
       Functions.PROFILE_REVIEW
     );
     this.canReviewLogs = this.permitsService.validate(Functions.LOG_REVIEW);
+    //this.canLibrary = this.permitsService.validate(Functions.LIBRARY_REVIEW);
     this.canReviewNews = this.permitsService.validate(Functions.NEWS_REVIEW);
     this.canCreateNews = this.permitsService.validate(Functions.NEWS_CREATE);
     this.canManageApp = this.permitsService.validate(Functions.APP_REVIEW);

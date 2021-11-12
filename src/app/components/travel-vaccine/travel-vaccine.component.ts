@@ -168,20 +168,7 @@ export class TravelVaccineComponent implements OnInit, OnDestroy {
         );
       }
     );
-    //Solicitar listado de vacunas
-    this.vaccineService.getVaccines().subscribe(
-      (response: any) => {
-        if (response.statusCode == 200) {
-          this.vaccineList = response.data;
-        }
-      },
-      (error: any) => {
-        this.toastr.error(
-          error,
-          this.translate.instant('TRAVELVACCINE.MANAGEMENT')
-        );
-      }
-    );
+
     //Validacion de permisos
     this.canReview = this.permitsService.validate(Functions.TRAVEL_REVIEW);
     this.canCreate = this.permitsService.validate(Functions.TRAVEL_CREATE);
@@ -209,6 +196,9 @@ export class TravelVaccineComponent implements OnInit, OnDestroy {
    */
   onChangeCountry(id: string) {
     this.countryId = id;
+    this.vaccineId = ''
+    this.vaccineList = []
+    console.log("este es el id actual de la vacuna --> " + this.vaccineId)
     this.getCountryVaccineList();
     this.getVaccineCountryList();
   }
@@ -239,18 +229,19 @@ export class TravelVaccineComponent implements OnInit, OnDestroy {
     this.vaccineService.getVaccines().subscribe(
       (response: any) => {
         if (response.statusCode == 200) {
+         
           this.vaccineList = response.data;
           this.vaccineList.forEach((vaccine) => {
             if (this.vaccineListExist.includes(vaccine.idVaccine)) {
               this.vaccineListTemp.push(vaccine);
             }
           });
-
           this.vaccineList = this.vaccineListTemp;
           //this.countryVaccineList = this.vaccineListTemp;
           this.vaccineListTemp = [];
 
           if (this.vaccineList.length == 0) {
+            console.log("entre en el primer error")
             this.toastr.warning(
               this.translate.instant('VCENTER.NOVACCINES'),
               this.translate.instant('VCENTER.MANAGEMENTS')
@@ -274,6 +265,7 @@ export class TravelVaccineComponent implements OnInit, OnDestroy {
           if (response.data.length > 0) {
             this.countryVaccineList = response.data;
           } else {
+            console.log("entre en el segundo error")
             this.countryVaccineList = [];
             this.toastr.warning(
               this.translate.instant('TRAVELVACCINE.NOVACCINES'),
@@ -296,7 +288,8 @@ export class TravelVaccineComponent implements OnInit, OnDestroy {
    * @param id ID of the vaccine to change
    */
   onChangeVaccine(id: string) {
-    this.vaccineId = id;
+    //this.vaccineId = id;
+    console.log("id vacuna ---> "  + this.vaccineId)
   }
 
   /**
@@ -407,8 +400,11 @@ export class TravelVaccineComponent implements OnInit, OnDestroy {
    */
   validar(): boolean {
     let cuenta: number = 0;
+    console.log(this.countryId)
+    console.log(this.vaccineId)
     if (this.countryId != '' && this.vaccineId != '') {
       cuenta += 1;
+      
     } else {
       this.toastr.warning(
         this.translate.instant('TRAVELVACCINE.CHECKCOUNTRYANDVACCINE'),

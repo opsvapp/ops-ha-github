@@ -22,6 +22,7 @@ import { AuthGuard as Guard } from './helpers/auth.guard';
 import { HealthCenterPageComponent } from './pages/health-center-page/health-center-page.component';
 import { VaccineCenterPageComponent } from './pages/vaccine-center-page/vaccine-center-page.component';
 import { UploadPageComponent } from './pages/upload-page/upload-page.component';
+import { LibrariesComponent } from './pages/libraries/libraries.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'users', component: UserComponent, canActivate: [Guard] },
   { path: 'profiles', component: ProfileComponent, canActivate: [Guard] },
   { path: 'logs', component: LogsComponent, canActivate: [Guard] },
+  { path: 'libs', component: LibrariesComponent, canActivate: [Guard] },
   { path: 'news', component: NewsComponent, canActivate: [Guard] },
   { path: 'archive', component: ArchiveComponent, canActivate: [Guard] },
   { path: 'vaccine', component: VaccinepageComponent, canActivate: [Guard] },
@@ -63,7 +65,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

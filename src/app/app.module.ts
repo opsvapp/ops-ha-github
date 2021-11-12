@@ -27,7 +27,8 @@ import {
   newspaper,
   globe,
   infoCircleFill,
-  download
+  download,
+  bookHalf
 } from 'ngx-bootstrap-icons';
 //Componentes
 import { AppRoutingModule } from './app-routing.module';
@@ -81,6 +82,8 @@ import { HttpClient } from "@angular/common/http";
 import { UploadComponent } from './components/upload/upload.component';
 import { UploadPageComponent } from './pages/upload-page/upload-page.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LibrariesComponent } from './pages/libraries/libraries.component';
+import { LibraryComponent } from './components/library/library.component';
 
 /**
  * Configs the i18n to locate the translate files
@@ -113,7 +116,8 @@ const icons = {
   chevronBarDown,
   globe,
   download,
-  infoCircleFill
+  infoCircleFill,
+  bookHalf
 };
 
 @NgModule({
@@ -158,6 +162,8 @@ const icons = {
     VaccineCenterComponent,
     UploadComponent,
     UploadPageComponent,
+    LibrariesComponent,
+    LibraryComponent,
   ],
   imports: [
     BrowserModule,

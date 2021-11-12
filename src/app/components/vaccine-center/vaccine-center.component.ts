@@ -416,7 +416,7 @@ export class VaccineCenterComponent implements OnInit {
   onDelete(idVaccine: string) {
     if (confirm(this.translate.instant('VCENTER.DELETEVACCINEQ'))) {
       this.vaccineCenterService
-        .deleteVaccineCenter(this.idVaccine_Center, idVaccine)
+        .deleteVaccineCenter(this.idVaccine_Center, idVaccine,this.idCountry)
         .subscribe(
           (response: any) => {
             if (response.statusCode == 200) {

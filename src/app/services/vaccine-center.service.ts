@@ -47,9 +47,9 @@ export class VaccineCenterService {
   /**
    * Eliminates a vaccine from a health center
    */
-  public deleteVaccineCenter(idVaccine_Center: string, idVaccine: string) {
+  public deleteVaccineCenter(idVaccine_Center: string, idVaccine: string, idCountry:string) {
     return this.httpClient.delete(
-      this.REST_API_SERVER + `/${idVaccine_Center}/${idVaccine}`
+      this.REST_API_SERVER + `/${idVaccine_Center}/${idVaccine}/${idCountry}`
     );
   }
 }

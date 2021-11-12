@@ -80,5 +80,7 @@ export enum Functions {
   VPOINT_UPDATE = 61,
   VPOINT_DELETE = 62,
 
-  UPLOAD = 63
+  UPLOAD = 63,
+  LIBRARY_REVIEW = 64
+
 }
