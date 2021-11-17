@@ -67,10 +67,13 @@ export class LibraryComponent implements OnInit {
   fileExtensions: string = ''; //String for file extensions
   isRegional: boolean = false; //Boolean for regional users
   isCountry: boolean = false; //Boolean for country users
+  loading: boolean = false; //Boolean for spinner
+  loadingcreate: boolean = false; //Boolean for spinner no.2
 
   fileId = -1; //Id of the array size
   canAddFiles: boolean = false; //Boolean for adding files
   canCreateArticle: boolean = false; //Boolean for formData
+  newdoc: boolean = true;
 
   //Update Data
   u_title_EN: string = ''; //Title of the library in english
@@ -249,7 +252,7 @@ export class LibraryComponent implements OnInit {
   }
 
   /**
-   * Loads the file
+   * Sends the article
    */
   upload() {
     if (this.validate()) {
@@ -436,6 +439,8 @@ export class LibraryComponent implements OnInit {
   */
   addDocument() {
     if (this.validateModal()) {
+      this.loadingcreate=true;
+      this.canAddFiles=false;
       this.fileId++;
       try {
         let splitted = "";
@@ -489,6 +494,8 @@ export class LibraryComponent implements OnInit {
 
           this.libraryService.postFile(datos).subscribe(
             (response: any) => {
+              this.loadingcreate=false;
+              this.canAddFiles=true;
               this.toastr.success(
                 this.translate.instant('LIBRARY.FILE_SUCCESS'),
                 this.translate.instant('LIBRARY.TITLE')
@@ -496,6 +503,8 @@ export class LibraryComponent implements OnInit {
               this.getFilesById(this.idLibrary);
             },
             (error: any) => {
+              this.loadingcreate=false;
+              this.canAddFiles=true;
               this.toastr.error(error, this.translate.instant('LIBRARY.TITLE'));
             }
           );
@@ -788,6 +797,8 @@ export class LibraryComponent implements OnInit {
    */
   addNewDocument() {
     if (this.validateModal()) {
+      this.loading=true;
+      this.newdoc=false;
       this.fileId++;
       try {
         let splitted = "";
@@ -841,6 +852,8 @@ export class LibraryComponent implements OnInit {
 
           this.libraryService.postFile(datos).subscribe(
             (response: any) => {
+              this.loading=false;
+              this.newdoc=true;
               this.toastr.success(
                 this.translate.instant('LIBRARY.FILE_SUCCESS'),
                 this.translate.instant('LIBRARY.TITLE')
@@ -848,6 +861,8 @@ export class LibraryComponent implements OnInit {
               this.getUpdatedFilesById(this.idLibrary);
             },
             (error: any) => {
+              this.loading=false;
+              this.newdoc=true;
               this.toastr.error(error, this.translate.instant('LIBRARY.TITLE'));
             }
           );
