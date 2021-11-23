@@ -522,7 +522,7 @@ export class LibraryComponent implements OnInit {
    * @returns True if the form is valid
    */
   validateModal() {
-    if (this.fileToUpload == File) {
+    if (this.fileToUpload == File || this.fileToUpload==undefined) {
       this.toastr.warning(
         this.translate.instant('LIBRARY.FILE_V'),
         this.translate.instant('LIBRARY.EMPTYTITLE')
@@ -796,7 +796,7 @@ export class LibraryComponent implements OnInit {
    * Add Document to files array when updating
    */
   addNewDocument() {
-    if (this.validateModal()) {
+    if (this.validateUpdateModal()) {
       this.loading=true;
       this.newdoc=false;
       this.fileId++;
@@ -966,7 +966,7 @@ export class LibraryComponent implements OnInit {
    * @returns True if the form is valid
    */
   validateUpdateModal() {
-    if (this.fileToUpload == File) {
+    if (this.fileToUpload == File || this.fileToUpload==undefined) {
       this.toastr.warning(
         this.translate.instant('LIBRARY.FILE_V'),
         this.translate.instant('LIBRARY.EMPTYTITLE')
