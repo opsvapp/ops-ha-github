@@ -225,18 +225,18 @@
             >
           </div>
         </li>
+        <!-- Biblioteca -->
+        <li *ngIf="canLibrary" class="nav-item">
+          <a class="nav-link" href="#" routerLink="/libs">
+            <i-bs name="bookHalf"></i-bs>
+            {{ "HEADER.LIBRARY" | translate }}
+          </a>
+        </li>
         <!-- Bitacora -->
         <li *ngIf="canReviewLogs" class="nav-item">
           <a class="nav-link" href="#" routerLink="/logs">
             <i-bs name="journal"></i-bs>
             {{ "HEADER.LOGS" | translate }}
-          </a>
-        </li>
-        <!-- Bitacora -->
-        <li *ngIf="canLibrary" class="nav-item">
-          <a class="nav-link" href="#" routerLink="/libs">
-            <i-bs name="bookHalf"></i-bs>
-            {{ "HEADER.LIBRARY" | translate }}
           </a>
         </li>
       </ul>

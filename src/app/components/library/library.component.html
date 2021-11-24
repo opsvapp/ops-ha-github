@@ -397,30 +397,32 @@
                         <table class="table table-striped table-hover table-sm">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th>{{ "LIBRARY.MODALTITLE" | translate }}</th>
-                                    <th>{{ "LIBRARY.DESCRIPTION" | translate }}</th>
-                                    <th>{{ "LIBRARY.AUTHOR" | translate }}</th>
-                                    <th>{{ "LIBRARY.PRIORITY" | translate }}</th>
-                                    <th>{{ "LIBRARY.T_ACTIONS" | translate }}</th>
+                                    <th style="text-align:center">{{ "LIBRARY.MODALTITLE" | translate }}</th>
+                                    <th style="text-align:center">{{ "LIBRARY.DESCRIPTION" | translate }}</th>
+                                    <th style="text-align:center">{{ "LIBRARY.AUTHOR" | translate }}</th>
+                                    <th style="text-align:center">{{ "LIBRARY.PRIORITY" | translate }}</th>
+                                    <th style="text-align:center">{{ "LIBRARY.QUANTITY" | translate }}</th>
+                                    <th style="text-align:center">{{ "LIBRARY.T_ACTIONS" | translate }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let item of articleList">
-                                    <td>
+                                    <td style="text-align:center">
                                         <span *ngIf="lang == 'es'">{{ item.title_ES }}</span>
                                         <span *ngIf="lang == 'en'">{{ item.title_EN }}</span>
                                         <span *ngIf="lang == 'pt'">{{ item.title_PT }}</span>
                                         <span *ngIf="lang == 'fr'">{{ item.title_FR }}</span>
                                     </td>
-                                    <td>
+                                    <td style="text-align:center">
                                         <span *ngIf="lang == 'es'">{{ item.content_ES }}</span>
                                         <span *ngIf="lang == 'en'">{{ item.content_EN }}</span>
                                         <span *ngIf="lang == 'pt'">{{ item.content_PT }}</span>
                                         <span *ngIf="lang == 'fr'">{{ item.content_FR }}</span>
                                     </td>
-                                    <td>{{ item.author }} </td>
-                                    <td>{{ item.priority_order }} </td>
-                                    <td>
+                                    <td style="text-align:center">{{ item.author }} </td>
+                                    <td style="text-align:center">{{ item.priority_order }} </td>
+                                    <td style="text-align:center">{{ item.files }} </td>
+                                    <td style="text-align:center">
                                         <div class="btn-group" role="group">
                                             <!--Botones de Acción-->
                                             <button *ngIf="canUpdate" (click)="getArticleData(item.idLibrary)"

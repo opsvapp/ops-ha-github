@@ -14,6 +14,7 @@ import { LibraryService } from '../../services/library.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -356,6 +357,8 @@ export class LibraryComponent implements OnInit {
   validate() {
     let valid: number = 0;
     this.author = localStorage.getItem('auth-user') || "";
+    this.author = this.author.replace("\"", ""); 
+    this.author = this.author.replace("\"", ""); 
     //Title validations
     if (this.title_EN == "") {
       this.toastr.warning(
@@ -365,25 +368,19 @@ export class LibraryComponent implements OnInit {
       return false;
     }
     if (this.title_ES == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_ES'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.title_EN != "") {
+        this.title_ES=this.title_EN;
+      }
     }
     if (this.title_FR == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_FR'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.title_EN != "") {
+        this.title_FR=this.title_EN;
+      }
     }
     if (this.title_PT == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_PT'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.title_EN != "") {
+        this.title_PT=this.title_EN;
+      }
     }
 
     //Content validation
@@ -395,27 +392,21 @@ export class LibraryComponent implements OnInit {
       return false;
     }
     if (this.htmlContentES == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.HTMLCONTENT_ES'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.htmlContentEN != "") {
+        this.htmlContentES = this.htmlContentEN;
+      }
     }
     if (this.htmlContentFR == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.HTMLCONTENT_FR'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.htmlContentEN != "") {
+        this.htmlContentFR = this.htmlContentEN;
+      }
     }
     if (this.htmlContentPT == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.HTMLCONTENT_PT'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.htmlContentEN != "") {
+        this.htmlContentPT = this.htmlContentEN;
+      }
     }
-
+    
     //DropDown validation
     if (this.priorityId == "-1") {
       this.toastr.warning(
@@ -501,6 +492,7 @@ export class LibraryComponent implements OnInit {
                 this.translate.instant('LIBRARY.TITLE')
               );
               this.getFilesById(this.idLibrary);
+              this.getLibraries();
             },
             (error: any) => {
               this.loadingcreate=false;
@@ -536,26 +528,21 @@ export class LibraryComponent implements OnInit {
       );
       return false;
     }
+
     if (this.display_ES == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_ES'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.display_EN != "") {
+        this.display_ES=this.display_EN;
+      }
     }
     if (this.display_FR == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_FR'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.display_EN != "") {
+        this.display_FR=this.display_EN;
+      }
     }
     if (this.display_PT == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_PT'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.display_EN != "") {
+        this.display_PT=this.display_EN;
+      }
     }
 
     if (this.fileToUpload) {
@@ -859,6 +846,7 @@ export class LibraryComponent implements OnInit {
                 this.translate.instant('LIBRARY.TITLE')
               );
               this.getUpdatedFilesById(this.idLibrary);
+              this.getLibraries();
             },
             (error: any) => {
               this.loading=false;
@@ -867,6 +855,7 @@ export class LibraryComponent implements OnInit {
             }
           );
         }
+        this.getLibraries();
         this.cancelDocument();
       } catch (error) {
       }
@@ -882,6 +871,8 @@ export class LibraryComponent implements OnInit {
   validateUpdate() {
     let valid: number = 0;
     this.u_author = localStorage.getItem('auth-user') || "";
+    this.u_author = this.u_author.replace("\"", ""); 
+    this.u_author = this.u_author.replace("\"", ""); 
     //Title validations
     if (this.u_title_EN == "") {
       this.toastr.warning(
@@ -891,25 +882,19 @@ export class LibraryComponent implements OnInit {
       return false;
     }
     if (this.u_title_ES == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_ES'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.u_title_EN != "") {
+        this.u_title_ES=this.u_title_EN;
+      }
     }
     if (this.u_title_FR == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_FR'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.u_title_EN != "") {
+        this.u_title_FR=this.u_title_EN;
+      }
     }
     if (this.u_title_PT == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_PT'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.u_title_EN != "") {
+        this.u_title_PT=this.u_title_EN;
+      }
     }
 
     //Content validation
@@ -920,28 +905,21 @@ export class LibraryComponent implements OnInit {
       );
       return false;
     }
-    if (this.u_htmlContentES == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.HTMLCONTENT_ES'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+    if(this.u_htmlContentES ==""){
+      if(this.u_htmlContentEN!=""){
+        this.u_htmlContentES =this.u_htmlContentEN;       
+      }
     }
-    if (this.u_htmlContentFR == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.HTMLCONTENT_FR'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+    if(this.u_htmlContentFR ==""){
+      if(this.u_htmlContentEN!=""){
+        this.u_htmlContentFR =this.u_htmlContentEN;       
+      }
     }
-    if (this.u_htmlContentPT == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.HTMLCONTENT_PT'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+    if(this.u_htmlContentPT ==""){
+      if(this.u_htmlContentEN !=""){
+        this.u_htmlContentPT =this.u_htmlContentEN;       
+      }
     }
-
     //DropDown validation
     if (this.u_priorityId == "-1") {
       this.toastr.warning(
@@ -981,25 +959,19 @@ export class LibraryComponent implements OnInit {
       return false;
     }
     if (this.display_ES == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_ES'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.display_EN != "") {
+        this.display_ES=this.display_EN;
+      }
     }
     if (this.display_FR == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_FR'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.display_EN != "") {
+        this.display_FR=this.display_EN;
+      }
     }
     if (this.display_PT == "") {
-      this.toastr.warning(
-        this.translate.instant('LIBRARY.EMPTYTITLE_PT'),
-        this.translate.instant('LIBRARY.EMPTYTITLE')
-      );
-      return false;
+      if (this.display_EN != "") {
+        this.display_PT=this.display_EN;
+      }
     }
 
     if (this.fileToUpload) {
