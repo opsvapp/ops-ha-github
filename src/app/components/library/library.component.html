@@ -360,6 +360,9 @@
                                             <br>
                                             <div class="col">
                                                 <br>
+                                                <h6>
+                                                    {{ "LIBRARY.FILE" | translate }}
+                                                </h6>
                                                 <div class="form-row">
                                                     <!-- FILE CHOOSER -->
                                                     <input #myInput (change)="handleFileInput($event)" type="file"
@@ -368,6 +371,23 @@
                                                 <div class="form-row">
                                                     <!-- LABEL -->
                                                     <label for="recomendation"><small>{{ "LIBRARY.DOCSRECOMENDATION" |
+                                                            translate }}</small></label>
+                                                </div>
+
+                                            </div>
+                                            <div class="col" *ngIf="canThumbnail">
+                                                <br>
+                                                <h6>
+                                                    {{ "LIBRARY.THUMBNAIL" | translate }}
+                                                </h6>
+                                                <div class="form-row">
+                                                    <!-- FILE CHOOSER THUMBNAIL -->
+                                                    <input #ThumbInput (change)="handleFileThumbInput($event)" type="file"
+                                                        class="form-control-file" accept="{{ thumbnailExtensions }}" />
+                                                </div>
+                                                <div class="form-row">
+                                                    <!-- LABEL -->
+                                                    <label for="recomendation"><small>{{ "LIBRARY.THUMBNAILRECOMENDATION" |
                                                             translate }}</small></label>
                                                 </div>
 
@@ -679,7 +699,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">a{{ "LIBRARY.ADDTITLE" | translate}}</h5>
+                                    <h5 class="modal-title">{{ "LIBRARY.ADDTITLE" | translate}}</h5>
                                     <br />
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -770,6 +790,9 @@
                                             <br>
                                             <div class="col">
                                                 <br>
+                                                <h6>
+                                                    {{ "LIBRARY.FILE" | translate }}
+                                                </h6>
                                                 <div class="form-row">
                                                     <!-- FILE CHOOSER -->
                                                     <input #myInputUpdate (change)="handleFileInput($event)" type="file"
@@ -778,6 +801,23 @@
                                                 <div class="form-row">
                                                     <!-- LABEL -->
                                                     <label for="recomendation"><small>{{ "LIBRARY.DOCSRECOMENDATION" |
+                                                            translate }}</small></label>
+                                                </div>
+
+                                            </div>
+                                            <div class="col" *ngIf="canThumbnail">
+                                                <br>
+                                                <h6>
+                                                    {{ "LIBRARY.THUMBNAIL" | translate }}
+                                                </h6>
+                                                <div class="form-row">
+                                                    <!-- FILE CHOOSER THUMBNAIL -->
+                                                    <input #ThumbInput (change)="handleFileThumbInput($event)" type="file"
+                                                        class="form-control-file" accept="{{ thumbnailExtensions }}" />
+                                                </div>
+                                                <div class="form-row">
+                                                    <!-- LABEL -->
+                                                    <label for="recomendation"><small>{{ "LIBRARY.THUMBNAILRECOMENDATION" |
                                                             translate }}</small></label>
                                                 </div>
 

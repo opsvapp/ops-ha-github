@@ -404,6 +404,7 @@
     "HTMLCONTENT_FR":"Debe ingresar contenido del artículo en francés",
     "HTMLCONTENT_PT":"Debe ingresar contenido del artículo en portugués",
     "DOCSRECOMENDATION":"Extensiones permitidas: pdf, jpg, jpeg, png",
+    "THUMBNAILRECOMENDATION":"Extensiones permitidas: jpg, jpeg, png",
     "MODALTITLE":"Título",
     "PRIORITY_V":"Debe seleccionar una prioridad",
     "COUNTRY_V":"Debe seleccionar un país",
@@ -423,7 +424,10 @@
     "UPDATE_SUCCESS":"Artículo actualizado exitosamente",
     "DELETE_SUCCESS":"Artículo borrado exitosamente",
     "DELETE_FILE_SUCCESS":"Archivo borrado exitosamente",
-    "QUANTITY":"Cantidad de Documentos"
+    "QUANTITY":"Cantidad de Documentos",
+    "FILE":"Archivo",
+    "THUMBNAIL":"Miniatura",
+    "FILE_THUMB":"Debe cargar una miniatura para el archivo seleccionado"
   }
   ,
   "NEWSTABLE": {

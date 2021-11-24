@@ -41,6 +41,7 @@ export class LibraryComponent implements OnInit {
   display_PT: string = '';//Name of the document in portuguese
   display_FR: string = '';//Name of the document in french
   fileToUpload: any = File; //Document associated with the library
+  thumbnail : any = File; //thumbnail associated
   priorityId: string = '-1'; //Priority id of the library
   countryName: string = '-1';//Country id that owns the library
   countryNameAux: string = '-1';//Country id that owns the library aux
@@ -66,6 +67,7 @@ export class LibraryComponent implements OnInit {
 
   //Variables
   fileExtensions: string = ''; //String for file extensions
+  thumbnailExtensions: string = ''; //String for thumbnail extensions
   isRegional: boolean = false; //Boolean for regional users
   isCountry: boolean = false; //Boolean for country users
   loading: boolean = false; //Boolean for spinner
@@ -75,6 +77,9 @@ export class LibraryComponent implements OnInit {
   canAddFiles: boolean = false; //Boolean for adding files
   canCreateArticle: boolean = false; //Boolean for formData
   newdoc: boolean = true;
+  canThumbnail:boolean=false;
+  ext:string="";
+  thumbExt:string="";
 
   //Update Data
   u_title_EN: string = ''; //Title of the library in english
@@ -103,6 +108,12 @@ export class LibraryComponent implements OnInit {
    */
    @ViewChild('myInputUpdate')
    myInputVariableUpdate: ElementRef | undefined;
+
+   /**
+   * Reference for thumbnail file
+   */
+  @ViewChild('ThumbInput')
+  myInputThumbVariable: ElementRef | undefined;
 
   /**
    * Configuration of text editors
@@ -214,6 +225,21 @@ export class LibraryComponent implements OnInit {
               this.fileExtensions += element + ',';
             }
           }
+
+          for (let index = 0; index < this.extensionList.length; index++) {
+            const element = this.extensionList[index];
+            if (index == this.extensionList.length - 1) {
+              if(element.toString()!=".pdf"){
+                this.thumbnailExtensions += element;
+              }
+            }
+            else {
+              if(element.toString()!=".pdf"){
+                this.thumbnailExtensions += element + ',';
+              }
+            }
+          }
+
         }
         else {
           this.toastr.warning(
@@ -250,6 +276,32 @@ export class LibraryComponent implements OnInit {
    */
   handleFileInput(event: any) {
     this.fileToUpload = event.target.files[0];
+    if(this.fileToUpload != File && this.fileToUpload!=undefined){
+      let splitArr = this.fileToUpload.type.split("/");
+      this.ext = splitArr[1];
+      if(this.ext=="pdf"){
+        this.canThumbnail=true;
+      }
+      else{
+        this.canThumbnail=false;
+      }
+    }
+    else{
+      this.canThumbnail=false;
+    }
+    
+  }
+
+  /**
+   * Handles file input
+   * @param event Event of uploading a file
+   */
+   handleFileThumbInput(event: any) {
+    this.thumbnail = event.target.files[0];
+    if(this.thumbnail != File && this.thumbnail!=undefined){
+      let splitArr = this.thumbnail.type.split("/");
+      this.thumbExt = splitArr[1];
+    }
   }
 
   /**
@@ -454,6 +506,7 @@ export class LibraryComponent implements OnInit {
         //Object to show
         let obj = {
           "file": this.fileToUpload,
+          "thumbnail": this.thumbnail,
           "name": this.fileToUpload.name,
           "displayName": fileNamesplitted,
           "type": splitArr2[1],
@@ -472,6 +525,7 @@ export class LibraryComponent implements OnInit {
           this.myFiles.forEach((element, index) => {
             datos.append(`archivo[${index}][idLibrary]`, this.idLibrary)
             datos.append(`archivo[${index}][file]`, element.file)
+            datos.append(`archivo[${index}][thumbnail]`, element.thumbnail)
             datos.append(`archivo[${index}][name]`, element.name)
             datos.append(`archivo[${index}][displayName]`, element.displayName)
             datos.append(`archivo[${index}][type]`, element.type)
@@ -487,6 +541,7 @@ export class LibraryComponent implements OnInit {
             (response: any) => {
               this.loadingcreate=false;
               this.canAddFiles=true;
+              this.canThumbnail=false;
               this.toastr.success(
                 this.translate.instant('LIBRARY.FILE_SUCCESS'),
                 this.translate.instant('LIBRARY.TITLE')
@@ -497,6 +552,7 @@ export class LibraryComponent implements OnInit {
             (error: any) => {
               this.loadingcreate=false;
               this.canAddFiles=true;
+              this.canThumbnail=false;
               this.toastr.error(error, this.translate.instant('LIBRARY.TITLE'));
             }
           );
@@ -520,6 +576,15 @@ export class LibraryComponent implements OnInit {
         this.translate.instant('LIBRARY.EMPTYTITLE')
       );
       return false;
+    }
+    if (this.ext == "pdf") {
+      if (this.thumbnail == File || this.thumbnail==undefined) {
+        this.toastr.warning(
+          this.translate.instant('LIBRARY.FILE_THUMB'),
+          this.translate.instant('LIBRARY.EMPTYTITLE')
+        );
+        return false;
+      }
     }
     if (this.display_EN == "") {
       this.toastr.warning(
@@ -575,6 +640,7 @@ export class LibraryComponent implements OnInit {
         );
         //Actualizar tabla
         this.getFilesById(this.idLibrary);
+        this.getLibraries();
       },
       (error: any) => {
         this.toastr.error(error, this.translate.instant('LIBRARY.TITLE'));
@@ -592,7 +658,11 @@ export class LibraryComponent implements OnInit {
     if (this.myInputVariableUpdate) {
       this.myInputVariableUpdate.nativeElement.value = "";
     }
+    if (this.myInputThumbVariable) {
+      this.myInputThumbVariable.nativeElement.value = "";
+    }
     this.fileToUpload = File;
+    this.thumbnail = File;
     this.display_EN = "";
     this.display_ES = "";
     this.display_FR = "";
@@ -808,6 +878,7 @@ export class LibraryComponent implements OnInit {
         //Object to show
         let obj = {
           "file": this.fileToUpload,
+          "thumbnail":this.thumbnail,
           "name": this.fileToUpload.name,
           "displayName": fileNamesplitted,
           "type": splitArr2[1],
@@ -826,6 +897,7 @@ export class LibraryComponent implements OnInit {
           this.myFiles.forEach((element, index) => {
             datos.append(`archivo[${index}][idLibrary]`, this.idLibrary)
             datos.append(`archivo[${index}][file]`, element.file)
+            datos.append(`archivo[${index}][thumbnail]`, element.thumbnail)
             datos.append(`archivo[${index}][name]`, element.name)
             datos.append(`archivo[${index}][displayName]`, element.displayName)
             datos.append(`archivo[${index}][type]`, element.type)
@@ -841,6 +913,7 @@ export class LibraryComponent implements OnInit {
             (response: any) => {
               this.loading=false;
               this.newdoc=true;
+              this.canThumbnail=false;
               this.toastr.success(
                 this.translate.instant('LIBRARY.FILE_SUCCESS'),
                 this.translate.instant('LIBRARY.TITLE')
@@ -851,6 +924,7 @@ export class LibraryComponent implements OnInit {
             (error: any) => {
               this.loading=false;
               this.newdoc=true;
+              this.canThumbnail=false;
               this.toastr.error(error, this.translate.instant('LIBRARY.TITLE'));
             }
           );
@@ -951,6 +1025,15 @@ export class LibraryComponent implements OnInit {
       );
       return false;
     }
+    if (this.ext == "pdf") {
+      if (this.thumbnail == File || this.thumbnail==undefined) {
+        this.toastr.warning(
+          this.translate.instant('LIBRARY.FILE_THUMB'),
+          this.translate.instant('LIBRARY.EMPTYTITLE')
+        );
+        return false;
+      }
+    }
     if (this.display_EN == "") {
       this.toastr.warning(
         this.translate.instant('LIBRARY.EMPTYTITLE_EN'),
@@ -1003,6 +1086,7 @@ export class LibraryComponent implements OnInit {
           this.translate.instant('LIBRARY.TITLE')
         );
         this.getUpdatedFilesById(this.idLibrary);
+        this.getLibraries();
       },
       (error: any) => {
         this.toastr.error(error, this.translate.instant('LIBRARY.TITLE'));
