@@ -333,6 +333,23 @@ export class ProfiletableComponent implements OnInit, OnDestroy {
   vpointCenterDelete = false;
 
   /**
+   * libraryView checkbox
+   */
+   libraryView = false;
+   /**
+    * libraryCreate checkbox
+    */
+  libraryCreate = false;
+   /**
+    * libraryUpdate checkbox
+    */
+  libraryUpdate = false;
+   /**
+    * libraryDelete checkbox
+    */
+  libraryDelete = false;
+
+  /**
    * uploadFiles checkbox
    */
   uploadFiles = false;
@@ -586,6 +603,12 @@ export class ProfiletableComponent implements OnInit, OnDestroy {
       : void 0;
 
     this.uploadFiles ? this.functionList.push(Functions.UPLOAD) : void 0;
+
+    this.libraryView ? this.functionList.push(Functions.LIBRARY_REVIEW) : void 0;
+    this.libraryCreate ? this.functionList.push(Functions.LIBRARY_CREATE) : void 0;
+    this.libraryUpdate ? this.functionList.push(Functions.LIBRARY_UPDATE) : void 0;
+    this.libraryDelete ? this.functionList.push(Functions.LIBRARY_DELETE) : void 0;
+
 
     //Peticion
     let dato = { id: this.actualId, functions: this.functionList };
@@ -871,6 +894,12 @@ this.vpointCenterDelete = permits.includes(Functions.VPOINT_DELETE)
   : false;
 
     this.uploadFiles = permits.includes(Functions.UPLOAD) ? true : false;
+
+    //Biblioteca
+    this.libraryView = permits.includes(Functions.LIBRARY_REVIEW) ? true : false;
+    this.libraryCreate = permits.includes(Functions.LIBRARY_CREATE) ? true : false;
+    this.libraryUpdate = permits.includes(Functions.LIBRARY_UPDATE) ? true : false;
+    this.libraryDelete = permits.includes(Functions.LIBRARY_DELETE) ? true : false;
   }
 
   /**
@@ -958,6 +987,11 @@ this.vpointCenterDelete = permits.includes(Functions.VPOINT_DELETE)
     this.vpointCenterDelete = false;
     //UPLOAD
     this.uploadFiles = false;
+    //LIBRARY
+    this.libraryView = false;
+    this.libraryCreate = false;
+    this.libraryUpdate = false;
+    this.libraryDelete = false;
   }
 
   /**

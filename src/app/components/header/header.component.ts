@@ -99,11 +99,22 @@ export class HeaderComponent implements OnInit {
    * Permission for UploadFiles
    */
   canUploadFiles = false;
+  
   /**
-   * Permission for UploadFiles
+   * Permission for ReviewLibraries   */
+  canReviewLibrary = false;
+  /**
+   * Permission for CreateLibraries
    */
-  canLibrary = true;
-
+  canCreateLibrary = false;
+/**
+   * Permission for UpdateLibraries
+   */
+ canUpdateLibrary = false;
+ /**
+  * Permission for DeleteLibraries
+  */
+ canDeleteLibrary = false;
   /**
     * Language used in the app
    */
@@ -137,10 +148,13 @@ export class HeaderComponent implements OnInit {
       Functions.PROFILE_REVIEW
     );
     this.canReviewLogs = this.permitsService.validate(Functions.LOG_REVIEW);
-    //this.canLibrary = this.permitsService.validate(Functions.LIBRARY_REVIEW);
     this.canReviewNews = this.permitsService.validate(Functions.NEWS_REVIEW);
     this.canCreateNews = this.permitsService.validate(Functions.NEWS_CREATE);
     this.canManageApp = this.permitsService.validate(Functions.APP_REVIEW);
+    this.canReviewLibrary = this.permitsService.validate(Functions.LIBRARY_REVIEW);
+    this.canUpdateLibrary = this.permitsService.validate(Functions.LIBRARY_UPDATE);
+    this.canDeleteLibrary = this.permitsService.validate(Functions.LIBRARY_DELETE);
+    this.canCreateLibrary = this.permitsService.validate(Functions.LIBRARY_CREATE);
     this.canReviewVaccines = this.permitsService.validate(
       Functions.VACCINE_REVIEW
     );
@@ -181,6 +195,7 @@ export class HeaderComponent implements OnInit {
     this.canUploadFiles = this.permitsService.validate(Functions.UPLOAD);
 
     this.lang = localStorage.getItem('lang') || '';
+    //this.router.navigate(['/lobby']);
   }
 
   /**
@@ -199,7 +214,7 @@ export class HeaderComponent implements OnInit {
    */
   logOut() {
     this.authService.logOutReq().subscribe();
-    this.authService.logOut();
+    this.authService.logOut();    
     this.router.navigate(['/login']);
   }
 

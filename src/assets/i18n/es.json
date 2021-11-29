@@ -512,7 +512,10 @@
     "NOFUNCTIONS":"No existen funciones asociadas al perfil",
     "HCENTER":"Funciones de Centros de Salud",
     "VCENTER":"Funciones de vacunas en Centros de Salud",
-    "VPOINT":"Funciones de punto de vacunación"
+    "VPOINT":"Funciones de punto de vacunación",
+    "UPLOAD_FILES":"Subir Archivos",
+    "UPLOAD":"Subir",
+    "LIBRARY_FUNC":"Funciones de Biblioteca"
   },
   "SCHEME": {
     "MANAGEMENT": "Gestión de esquemas",

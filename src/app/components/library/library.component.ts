@@ -10,6 +10,8 @@ import { CountryService } from '../../services/country.service';
 //Send File Service
 import { LibraryService } from '../../services/library.service';
 
+import { Functions } from '../../helpers/functions.enum';
+
 //Editor config
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
@@ -47,10 +49,10 @@ export class LibraryComponent implements OnInit {
   countryNameAux: string = '-1';//Country id that owns the library aux
 
   //Permisos
-  canReview = true; //Permission used to let the user Review
-  canCreate = true; //Permission used to let the user Create
-  canUpdate = true; //Permission used to let the user Update
-  canDelete = true; //Permission used to let the user Delete
+  canReview = false; //Permission used to let the user Review
+  canCreate = false; //Permission used to let the user Create
+  canUpdate = false; //Permission used to let the user Update
+  canDelete = false; //Permission used to let the user Delete
 
   //Language
   lang: string = "en"; //Language used in the app
@@ -210,6 +212,12 @@ export class LibraryComponent implements OnInit {
     );
 
     this.getLibraries();
+    //Valdacion de permisos
+    this.canReview = this.permitsService.validate(Functions.LIBRARY_REVIEW);
+    this.canCreate = this.permitsService.validate(Functions.LIBRARY_CREATE);
+    this.canUpdate = this.permitsService.validate(Functions.LIBRARY_UPDATE);
+    this.canDelete = this.permitsService.validate(Functions.LIBRARY_DELETE);
+
 
     //Cargar listado de extensiones
     this.libraryService.getExtensions().subscribe(

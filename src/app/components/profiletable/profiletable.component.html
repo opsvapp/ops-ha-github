@@ -420,21 +420,73 @@
                   </div>
                 </div>
               </div>
-              <!-- Funciones de Bitacora-->
+              <!-- Funciones de Biblioteca-->
               <div class="form-row separador">
-                <h6 style="color: white">{{ "PROFILETABLE.LOGS_FUNC" | translate}}</h6>
+                <h6 style="color: white">{{ "PROFILETABLE.LIBRARY_FUNC" | translate}}</h6>
               </div>
               <div class="form-row ficha">
                 <div class="form-group">
                   <div class="form-check">
                     <input
-                      [(ngModel)]="logView"
+                      [(ngModel)]="libraryView"
                       class="form-check-input"
                       type="checkbox"
-                      name="logView"
+                      name="libraryView"
                     />
-                    <label class="form-check-label" for="logView"
+                    <label class="form-check-label" for="libraryView"
                       >{{ "PROFILETABLE.CONSULT" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="libraryCreate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="libraryCreate"
+                    />
+                    <label class="form-check-label" for="libraryCreate"
+                      >{{ "PROFILETABLE.ADD" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="libraryUpdate"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="libraryUpdate"
+                    />
+                    <label class="form-check-label" for="libraryUpdate"
+                      >{{ "PROFILETABLE.MODIFY" | translate}}</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="libraryDelete"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="libraryDelete"
+                    />
+                    <label class="form-check-label" for="libraryDelete"
+                      >{{ "PROFILETABLE.DELETE" | translate}}</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Upload -->
+              <div class="form-row separador3" >
+                <h6 style="color: white">{{ "PROFILETABLE.UPLOAD" | translate}}</h6>
+              </div>
+              <div class="form-row ficha">
+                <div class="form-group">
+                  <div class="form-check">
+                    <input
+                      [(ngModel)]="uploadFiles"
+                      class="form-check-input"
+                      type="checkbox"
+                      name="uploadFiles"
+                    />
+                    <label class="form-check-label" for="uploadFiles"
+                      >{{ "PROFILETABLE.UPLOAD_FILES" | translate}}</label
                     >
                   </div>
                 </div>
@@ -704,25 +756,26 @@
                   </div>
                 </div>
               </div>
-              <!-- Funciones de App-->
-              <div class="form-row separador2">
-                <h6 style="color: white">{{ "PROFILETABLE.APP_FUNC" | translate}}</h6>
+              <!-- Funciones de Bitacora-->
+              <div class="form-row separador">
+                <h6 style="color: white">{{ "PROFILETABLE.LOGS_FUNC" | translate}}</h6>
               </div>
               <div class="form-row ficha">
                 <div class="form-group">
                   <div class="form-check">
                     <input
-                      [(ngModel)]="appView"
+                      [(ngModel)]="logView"
                       class="form-check-input"
                       type="checkbox"
-                      name="appView"
+                      name="logView"
                     />
-                    <label class="form-check-label" for="appView"
+                    <label class="form-check-label" for="logView"
                       >{{ "PROFILETABLE.CONSULT" | translate}}</label
                     >
                   </div>
                 </div>
               </div>
+              
             </div>
             <!-- Tercera Columna -->
             <div class="col">
@@ -987,26 +1040,28 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Upload -->
-              <div class="form-row separador3" >
-                <h6 style="color: white">Upload</h6>
+              
+              <!-- Funciones de App-->
+              <div class="form-row separador2">
+                <h6 style="color: white">{{ "PROFILETABLE.APP_FUNC" | translate}}</h6>
               </div>
               <div class="form-row ficha">
                 <div class="form-group">
                   <div class="form-check">
                     <input
-                      [(ngModel)]="uploadFiles"
+                      [(ngModel)]="appView"
                       class="form-check-input"
                       type="checkbox"
-                      name="uploadFiles"
+                      name="appView"
                     />
-                    <label class="form-check-label" for="uploadFiles"
-                      >Subir Archivos</label
+                    <label class="form-check-label" for="appView"
+                      >{{ "PROFILETABLE.CONSULT" | translate}}</label
                     >
                   </div>
                 </div>
               </div>
+
+              
               <!--Limite de la columna-->
             </div>
             <!--Limite del Modal-->

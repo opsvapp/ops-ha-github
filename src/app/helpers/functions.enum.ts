@@ -81,6 +81,10 @@ export enum Functions {
   VPOINT_DELETE = 62,
 
   UPLOAD = 63,
-  LIBRARY_REVIEW = 64
+  LIBRARY_REVIEW = 64,
+  LIBRARY_CREATE = 65,
+  LIBRARY_UPDATE = 66,
+  LIBRARY_DELETE = 67,
+  
 
 }
