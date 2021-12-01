@@ -10,15 +10,21 @@ import { TokenStorageService } from '../services/token-storage.service';
 })
 export class PermitsService {
   /**
+   * Functions that the user has assigned
+   */
+  functions:Array<Number> = this.tokenStorageService.getFunctions();
+  /**
    * Constructor for PermitsService
    * @param tokenStorageService service used to manage the user token
    */
   constructor(private tokenStorageService:TokenStorageService) { }
 
   /**
-   * Functions that the user has assigned
+   * Update user functions
    */
-  functions:Array<Number> = this.tokenStorageService.getFunctions();
+  getFunctions(): void {
+    this.functions = this.tokenStorageService.getFunctions();
+  }
 
   /**
    * Validates if the user has permission 

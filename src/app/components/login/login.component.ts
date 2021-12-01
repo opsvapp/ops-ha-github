@@ -6,6 +6,7 @@ import { TokenStorageService } from '../../services/token-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { PermitsService } from 'src/app/services/permits.service';
 /**
  * LoginComponent where the user can login into the app
  */
@@ -51,7 +52,8 @@ export class LoginComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private toastr: ToastrService,
     private router: Router,
-    public translate: TranslateService
+    public translate: TranslateService,
+    private permitsService: PermitsService,
   ) {}
 
   /**
@@ -89,6 +91,7 @@ export class LoginComponent implements OnInit {
           //Para permisos por pais
           localStorage.setItem('regional', String(response.data.regional));
           localStorage.setItem('idCountry', String(response.data.idCountry));
+          this.permitsService.getFunctions();
           this.router.navigate(['/lobby']);
         }
       },
