@@ -357,8 +357,27 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            <br>
-                                            <div class="col">
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <h6>
+                                                    {{ "EDITOR.SOURCE" | translate }}
+                                                    </h6>
+                                                  <input
+                                                    [(ngModel)]="source"
+                                                    class="form-control"
+                                                    type="url"
+                                                    name="source"
+                                                    id="source"
+                                                  />
+                                                </div>
+                                              </div>
+                                        </div>
+                                                                                
+                                        <div class="row">
+                                           <div class="col">
                                                 <br>
                                                 <h6>
                                                     {{ "LIBRARY.FILE" | translate }}
@@ -393,6 +412,7 @@
 
                                             </div>
                                         </div>
+
                                         <br>
                                     </form>
                                 </div>
@@ -787,9 +807,25 @@
                                                     </div>
                                                 </form>
                                             </div>
-                                            <br>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <h6>
+                                                    {{ "EDITOR.SOURCE" | translate }}
+                                                    </h6>
+                                                  <input
+                                                    [(ngModel)]="source"
+                                                    class="form-control"
+                                                    type="url"
+                                                    name="source"
+                                                    id="source"
+                                                  />
+                                                </div>
+                                              </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col">
-                                                <br>
                                                 <h6>
                                                     {{ "LIBRARY.FILE" | translate }}
                                                 </h6>
@@ -806,7 +842,6 @@
 
                                             </div>
                                             <div class="col" *ngIf="canThumbnail">
-                                                <br>
                                                 <h6>
                                                     {{ "LIBRARY.THUMBNAIL" | translate }}
                                                 </h6>
@@ -823,7 +858,6 @@
 
                                             </div>
                                         </div>
-                                        <br>
                                     </form>
                                 </div>
                                 <div class="modal-footer" style="background-color: lightgray">

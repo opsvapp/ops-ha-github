@@ -137,6 +137,25 @@
             </div>
           </div>
         </div>
+
+        <!--Fuente de la informacion-->
+        <div class="form-row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="source">
+                <b> {{ "EDITOR.SOURCE" | translate }} </b>
+              </label>
+              <input
+                [(ngModel)]="source"
+                class="form-control"
+                type="url"
+                name="source"
+                id="source"
+              />
+            </div>
+          </div>
+        </div>
+        
         <button (click)="saveEffect()" class="btn btn-success">
           {{ "EFFECTS.SAVEEFFECT" | translate }}
           <i-bs name="plus-circle"></i-bs>
@@ -277,6 +296,20 @@
                   name="descriptionES"
                 />
               </div>
+
+              <div class="form-group input-group-sm">
+                <label for="source">{{
+                  "EDITOR.SOURCE" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalSource"
+                  class="form-control"
+                  type="url"
+                  id="modalSource"
+                  name="modalSource"
+                />
+              </div>
+
             </div>
             <div class="col">
               <!-- Portugues -->

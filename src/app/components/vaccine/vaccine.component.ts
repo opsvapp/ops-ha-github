@@ -92,6 +92,11 @@ export class VaccineComponent implements OnInit, OnDestroy {
    */
   descriptionFR = '';
 
+  /**
+   * source of the information
+   */
+   source = '';
+
   //Modal ngModels
   /**
    * modal ngModel for NameEN
@@ -160,6 +165,11 @@ export class VaccineComponent implements OnInit, OnDestroy {
    * modal ngModel for DescriptionFR
    */
   modalDescriptionFR = '';
+
+  /**
+   * modal ngModel for Source
+   */
+   modalSource = '';
 
   //Array para manejar la creacion de vacuna
   /**
@@ -376,6 +386,7 @@ export class VaccineComponent implements OnInit, OnDestroy {
       datos['title_FR'] = this.titleFR;
       datos['administration_FR'] = this.adminFR;
       datos['description_FR'] = this.descriptionFR;
+      datos['source'] = this.source;
       datos['diseases'] = this.modalDiseaseList;
       datos['secondary_effects'] = this.modalEffectList;
       //Request
@@ -441,6 +452,7 @@ export class VaccineComponent implements OnInit, OnDestroy {
         this.modalDescriptionES = datos.description_ES;
         this.modalDescriptionPT = datos.description_PT;
         this.modalDescriptionFR = datos.description_FR;
+        this.modalSource = datos.source;
         this.updatedDiseaseList = datos.diseases;
         this.updatedEffectList = datos.secondary_effects;
       },
@@ -477,6 +489,7 @@ export class VaccineComponent implements OnInit, OnDestroy {
         this.modalDescriptionES = datos.description_ES;
         this.modalDescriptionPT = datos.description_PT;
         this.modalDescriptionFR = datos.description_FR;
+        this.modalSource = datos.source;
         this.updatedDiseaseList = datos.diseases;
         this.updatedEffectList = datos.secondary_effects;
       },
@@ -507,6 +520,7 @@ export class VaccineComponent implements OnInit, OnDestroy {
     datos['title_FR'] = this.modalTitleFR;
     datos['administration_FR'] = this.modalAdminFR;
     datos['description_FR'] = this.modalDescriptionFR;
+    datos['source'] = this.modalSource;
     datos['diseases'] = this.updatedDiseaseList;
     datos['secondary_effects'] = this.updatedEffectList;
     this.vaccineService.updateVaccine(datos).subscribe(
@@ -758,6 +772,7 @@ export class VaccineComponent implements OnInit, OnDestroy {
     this.descriptionES = '';
     this.descriptionPT = '';
     this.descriptionFR = '';
+    this.source = '';
     this.modalDiseaseList = [];
     this.modalEffectList = [];
   }

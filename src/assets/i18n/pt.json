@@ -118,7 +118,8 @@
     "ENGLISH": "Inglês",
     "SPANISH": "Espanhol",
     "PORTUGUESE": "Português",
-    "FRENCH": "Francês"
+    "FRENCH": "Francês",
+    "SOURCE": "Fonte"
   },
   "EFFECTS":{
     "MANAGEMENTS": "Gerenciamento de efeitos colaterais",

@@ -54,6 +54,11 @@ export class DiseaseComponent implements OnInit, OnDestroy {
    */
   descriptionFR = '';
 
+  /**
+   * Source of the information
+   */
+   source = '';
+
   //Modal ngModels
   /**
    * Current value of the modal related to  disease name in english
@@ -88,6 +93,11 @@ export class DiseaseComponent implements OnInit, OnDestroy {
    * Current value of the modal related to  disease description in french
    */
   modalDescriptionFR = '';
+
+  /**
+   * modal ngModel for Source
+   */
+   modalSource = '';
 
   //Var
   /**
@@ -200,6 +210,7 @@ export class DiseaseComponent implements OnInit, OnDestroy {
         this.modalDescriptionES = datos.description_ES;
         this.modalDescriptionPT = datos.description_PT;
         this.modalDescriptionFR = datos.description_FR;
+        this.modalSource = datos.source;
       },
       (error: any) => {
         this.toastr.error(error, this.translate.instant("DISEASE.MANAGEMENTS"));
@@ -222,6 +233,7 @@ export class DiseaseComponent implements OnInit, OnDestroy {
       datos.append('description_PT', this.descriptionPT);
       datos.append('name_FR', this.nameFR);
       datos.append('description_FR', this.descriptionFR);
+      datos.append('source', this.source);
       //Request
       this.diseaseService.createDisease(datos).subscribe(
         (response: any) => {
@@ -253,6 +265,7 @@ export class DiseaseComponent implements OnInit, OnDestroy {
     datos.append('description_PT', this.modalDescriptionPT);
     datos.append('name_FR', this.modalNameFR);
     datos.append('description_FR', this.modalDescriptionFR);
+    datos.append('source', this.modalSource);
     this.diseaseService.updateDisease(datos).subscribe(
       (response: any) => {
         if (response.statusCode == 200) {
@@ -346,5 +359,6 @@ export class DiseaseComponent implements OnInit, OnDestroy {
     this.descriptionES = '';
     this.descriptionPT = '';
     this.descriptionFR = '';
+    this.source = '';
   }
 }

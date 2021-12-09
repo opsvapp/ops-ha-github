@@ -54,6 +54,11 @@ export class EffectsComponent implements OnInit, OnDestroy {
    */
   descriptionFR = '';
 
+  /**
+   * source of the information
+   */
+   source = '';
+
   //Modal ngModels
   /**
    * Modal value of the name of the secondary effect in english
@@ -88,6 +93,11 @@ export class EffectsComponent implements OnInit, OnDestroy {
    * Modal value of the description of the secondary effect in english
    */
   modalDescriptionFR = '';
+
+  /**
+   * modal ngModel for Source
+   */
+   modalSource = '';
 
   //Var
   /**
@@ -199,6 +209,7 @@ export class EffectsComponent implements OnInit, OnDestroy {
         this.modalDescriptionES = datos.description_ES;
         this.modalDescriptionPT = datos.description_PT;
         this.modalDescriptionFR = datos.description_FR;
+        this.modalSource = datos.source;
       },
       (error: any) => {
         this.toastr.error(
@@ -224,6 +235,7 @@ export class EffectsComponent implements OnInit, OnDestroy {
       datos.append('description_PT', this.descriptionPT);
       datos.append('name_FR', this.nameFR);
       datos.append('description_FR', this.descriptionFR);
+      datos.append('source', this.source);
       //Request
       this.effectsService.createEffect(datos).subscribe(
         (response: any) => {
@@ -255,6 +267,7 @@ export class EffectsComponent implements OnInit, OnDestroy {
     datos.append('description_PT', this.modalDescriptionPT);
     datos.append('name_FR', this.modalNameFR);
     datos.append('description_FR', this.modalDescriptionFR);
+    datos.append('source', this.modalSource);
     this.effectsService.updateEffect(datos).subscribe(
       (response: any) => {
         if (response.statusCode == 200) {
@@ -348,5 +361,6 @@ export class EffectsComponent implements OnInit, OnDestroy {
     this.descriptionES = '';
     this.descriptionPT = '';
     this.descriptionFR = '';
+    this.source = '';
   }
 }

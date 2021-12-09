@@ -118,7 +118,8 @@
     "ENGLISH": "Inglés",
     "SPANISH": "Español",
     "PORTUGUESE": "Portugués",
-    "FRENCH": "Francés"
+    "FRENCH": "Francés",
+    "SOURCE": "Fuente"
   },
   "EFFECTS":{
     "MANAGEMENTS": "Gestión de efectos secundarios",

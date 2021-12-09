@@ -44,6 +44,7 @@ export class LibraryComponent implements OnInit {
   display_FR: string = '';//Name of the document in french
   fileToUpload: any = File; //Document associated with the library
   thumbnail : any = File; //thumbnail associated
+  source: string = ''; //Source of the file
   priorityId: string = '-1'; //Priority id of the library
   countryName: string = '-1';//Country id that owns the library
   countryNameAux: string = '-1';//Country id that owns the library aux
@@ -523,7 +524,8 @@ export class LibraryComponent implements OnInit {
           "titulo_ES": this.display_ES,
           "titulo_FR": this.display_PT,
           "titulo_PT": this.display_FR,
-          "id": this.fileId
+          "id": this.fileId,
+          "source" : this.source
         }
         this.myFiles = [];
         this.myFiles.push(obj);
@@ -542,7 +544,8 @@ export class LibraryComponent implements OnInit {
             datos.append(`archivo[${index}][titulo_ES]`, element.titulo_ES)
             datos.append(`archivo[${index}][titulo_FR]`, element.titulo_FR)
             datos.append(`archivo[${index}][titulo_PT]`, element.titulo_PT)
-            datos.append(`archivo[${index}][id]`, element.id)
+            datos.append(`archivo[${index}][id]`, element.id),
+            datos.append(`archivo[${index}][source]`, element.source)
           });
 
           this.libraryService.postFile(datos).subscribe(
@@ -675,6 +678,7 @@ export class LibraryComponent implements OnInit {
     this.display_ES = "";
     this.display_FR = "";
     this.display_PT = "";
+    this.source = "";
   }
 
   /**
@@ -895,6 +899,7 @@ export class LibraryComponent implements OnInit {
           "titulo_ES": this.display_ES,
           "titulo_FR": this.display_PT,
           "titulo_PT": this.display_FR,
+          "source":this.source,
           "id": this.fileId
         }
         this.myFiles = [];
@@ -914,7 +919,8 @@ export class LibraryComponent implements OnInit {
             datos.append(`archivo[${index}][titulo_ES]`, element.titulo_ES)
             datos.append(`archivo[${index}][titulo_FR]`, element.titulo_FR)
             datos.append(`archivo[${index}][titulo_PT]`, element.titulo_PT)
-            datos.append(`archivo[${index}][id]`, element.id)
+            datos.append(`archivo[${index}][id]`, element.id),
+            datos.append(`archivo[${index}][source]`, element.source)
           });
 
           this.libraryService.postFile(datos).subscribe(

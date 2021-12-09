@@ -242,6 +242,24 @@
           </div>
         </div>
 
+        <!--Fuente de la informacion-->
+        <div class="form-row">
+          <div class="col-5">
+            <div class="form-group">
+              <label for="source">
+                <b> {{ "EDITOR.SOURCE" | translate }} </b>
+              </label>
+              <input
+                [(ngModel)]="source"
+                class="form-control"
+                type="url"
+                name="source"
+                id="source"
+              />
+            </div>
+          </div>
+        </div>
+
         <!--Area para asignacion de enfermedades y efectos secundarios-->
         <div class="row" style="margin-bottom: 15px; margin-top: 15px">
           <div class="col">
@@ -584,6 +602,18 @@
                   type="text"
                   id="descriptionES"
                   name="descriptionES"
+                />
+              </div>
+              <div class="form-group input-group-sm">
+                <label for="source">{{
+                  "EDITOR.SOURCE" | translate
+                }}</label>
+                <input
+                  [(ngModel)]="modalSource"
+                  class="form-control"
+                  type="url"
+                  id="modalSource"
+                  name="modalSource"
                 />
               </div>
             </div>

@@ -118,7 +118,8 @@
     "ENGLISH": "English",
     "SPANISH": "Spanish",
     "PORTUGUESE": "Portuguese",
-    "FRENCH": "French"
+    "FRENCH": "French",
+    "SOURCE": "Source"
   },
   "EFFECTS":{
     "MANAGEMENTS": "Side Effects Management",
